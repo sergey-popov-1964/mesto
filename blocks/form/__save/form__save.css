@@ -14,12 +14,12 @@
   cursor: pointer;
 }
 
-.edit-form__button-save:hover{
+.form__save:hover{
   opacity: .8;
 }
 
 @media screen and (max-width: 618px) {
-  .edit-form__button-save {
+  .form__save {
     font-size: 14px;
     line-height: 17px;
   }
