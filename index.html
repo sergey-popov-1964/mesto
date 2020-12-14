@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mesto</title>
+  <link rel="stylesheet" href="./pages/index.css">
+</head>
+
+<body class="root">
+  <div class="page">
+    <header class="header">
+      <a href="" class="header__logo">
+        <img src="./images/mesto_logo.svg" alt="Логотип" class="header__img">
+      </a>
+    </header>
+
+    <main class="content">
+
+      <section class="profile">
+        <img src="./images/mesto_custo.png" alt="Кусто" class="profile__avatar">
+        <div class="profile__info">
+          <p class="profile__name">Жак-Ив Кусто</p>
+          <button type="button" class="profile__button-edit"></button>
+          <p class="profile__job">Исследователь океана</p>
+        </div>
+        <button type="button" class="profile__button-add"></button>
+      </section>
+
+      <section class="elements">
+        <ul class="elements__list">
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/petersberg.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Санкт-Петербург</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/kazan.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Казань</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/novgorod.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Новгород</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/vladimir.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Владимир</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/pskov.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Псков</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+          <li class="element">
+            <div class="element__img" style="background-image: url('./images/volgograd.jpg')"></div>
+            <div class="element__info">
+              <p class="element__text">Волгоград</p>
+              <button type="button" class="element__heart"></button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__text">
+        © 2020 Mesto Russia
+      </p>
+    </footer>
+  </div>
+
+
+  <div class="popup popup_form_edit">
+    <form action="#" class="form form_edit">
+      <h2 class="form__title">Редактировать профиль</h2>
+      <input type="text" class="form__input form__input_edit_name">
+      <input type="text" class="form__input form__input_edit_job">
+      <button type="submit" class="form__save form__save_edit">
+        Сохранить
+      </button>
+      <button type="button" class="form__close form__close_edit"></button>
+    </form>
+  </div>
+
+  <script src="./pages/index.js"></script>
+</body>
+
+</html>

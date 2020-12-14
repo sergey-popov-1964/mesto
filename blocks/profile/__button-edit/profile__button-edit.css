@@ -1,0 +1,42 @@
+.profile__button-edit {
+  margin: 6px 0;
+  padding: 0;
+  outline: none;
+  border: solid 1px #ffffff;
+  font-family: inherit;
+  width: 24px;
+  height: 24px;
+  background-color: #000000;
+  align-self: end;
+  cursor: pointer;
+  transition: all .5s ease;
+  position: relative;
+}
+
+.profile__button-edit::before {
+  content: "";
+  position: absolute;
+  background: url('../../../images/mesto_pen.svg') no-repeat center / contain;
+  width: 10px;
+  height: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.profile__button-edit:hover {
+  opacity: .6;
+}
+
+@media screen and (max-width: 618px){
+  .profile__button-edit {
+    width: 18px;
+    height: 18px;
+  }
+
+  .profile__button-edit::before {
+  width: 7px;
+  height: 7px;
+  }
+
+}
