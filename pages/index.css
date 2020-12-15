@@ -4,6 +4,7 @@
 @import url('../blocks/root/root.css');
 
 @import url('../blocks/page/page.css');
+@import url('../blocks/page/__header/page__header.css');
 
 @import url('../blocks/header/header.css');
 @import url('../blocks/header/__logo/header__logo.css');
@@ -37,7 +38,6 @@
 
 @import url('../blocks/form-edit/form-edit.css');
 @import url('../blocks/form-edit/__title/form-edit__title.css');
-@import url('../blocks/form-edit/__name/form-edit__name.css');
-@import url('../blocks/form-edit/__job/form-edit__job.css');
+@import url('../blocks/form-edit/__input/form-edit__input.css');
 @import url('../blocks/form-edit/__save/form-edit__save.css');
 @import url('../blocks/form-edit/__close/form-edit__close.css');
