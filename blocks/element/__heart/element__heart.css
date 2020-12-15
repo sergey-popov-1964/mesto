@@ -14,3 +14,8 @@
   opacity: .5;
   transition: all .5s ease;
 }
+
+.element__heart:active {
+  background: url('../../../images/mesto_heart_like.svg') no-repeat center center / cover;
+  opacity: 1;
+}
