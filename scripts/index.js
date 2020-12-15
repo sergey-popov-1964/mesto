@@ -6,8 +6,12 @@ let formEditElement = document.querySelector('.form-edit')
 
 let profileName = document.querySelector('.profile__name');
 let profileJob = document.querySelector('.profile__job');
-let nameInput = document.querySelector('.form-edit__name');
-let jobInput = document.querySelector('.form-edit__job');
+let nameInput = document.querySelector('.form-edit__input_edit_name');
+let jobInput = document.querySelector('.form-edit__input_edit_job');
+
+
+// --------------------------------------------------------
+// Функции для формы Edit
 
 // Функция открытия попапа с формой
 function openFormEdit() {

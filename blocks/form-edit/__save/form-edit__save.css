@@ -1,6 +1,6 @@
 .form-edit__save {
-  margin: 48px 0 0;
-  padding: 14px 0;
+  margin: 46px 0 0;
+  padding: 14px 133px;
   border: none;
   outline: none;
   font-family: 'Inter', 'Arial', sans-serif;
@@ -23,5 +23,6 @@
   .form-edit__save {
     font-size: 14px;
     line-height: 17px;
+    padding: 14px 82px;
   }
 }
