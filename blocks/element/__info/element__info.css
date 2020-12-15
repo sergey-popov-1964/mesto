@@ -1,4 +1,4 @@
-.element__info{
+.element__info {
   display: grid;
   grid-template: auto / 1fr min-content;
   padding: 25px 15px 25px 21px;

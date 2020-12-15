@@ -5,13 +5,13 @@
   display: grid;
   min-height: 100vh;
   grid-template: max-content auto max-content /minmax(19px, auto) minmax(auto, 880px) minmax(19px, auto);
-	grid-template-areas:
-		". header ."
-		". main ."
-		". footer .";
+  grid-template-areas:
+    ". header ."
+    ". main ."
+    ". footer .";
 }
 
-@media screen and (max-width: 618px){
+@media screen and (max-width: 618px) {
   .page {
     padding: 28px 0 36px;
   }

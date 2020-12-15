@@ -1,4 +1,4 @@
-.profile__info{
+.profile__info {
   grid-column: 2/3;
   display: grid;
   gap: 7px 18px;
@@ -7,19 +7,18 @@
   padding: 0;
 }
 
-@media screen and (max-width: 918px){
+@media screen and (max-width: 918px) {
   .profile__info {
     grid-row: 1/2;
     grid-column: 2/3;
   }
 }
 
-@media screen and (max-width: 618px){
+@media screen and (max-width: 618px) {
   .profile__info {
     grid-row: 2/3;
     grid-column: 1/2;
     justify-self: center;
     gap: 7px 10px;
-    }
+  }
 }
-

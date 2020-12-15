@@ -1,4 +1,4 @@
-.form__close {
+.form-edit__close {
   position: absolute;
   background: url('../../../images/close_icon.svg') no-repeat center;
   width: 40px;
@@ -15,16 +15,18 @@
   transform: rotate(45deg);
 }
 
-.form__close:hover {
+.form-edit__close:hover {
   opacity: .6;
 }
 
 @media screen and (max-width: 618px) {
-  .form__close {
+  .form-edit__close {
+    background: url('../../../images/close_icon_mini.svg') no-repeat center;
     width: 26px;
     height: 26px;
     top: -45px;
     right: 0;
+    transform: rotate(0deg);
   }
 
 
