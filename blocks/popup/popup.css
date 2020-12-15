@@ -8,5 +8,5 @@
   background-color: rgba(0, 0, 0, .5);
   visibility: hidden;
   display: grid;
-  grid-template: auto max-content auto / auto max-content auto;
+  grid-template: 1fr max-content 1fr / 1fr max-content 1fr;
 }
