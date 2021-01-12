@@ -30,48 +30,6 @@
 
       <section class="elements">
         <ul class="elements__list">
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/petersberg.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Санкт-Петербург</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/kazan.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Казань</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/novgorod.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Новгород</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/vladimir.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Владимир</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/pskov.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Псков</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
-          <li class="element">
-            <div class="element__img" style="background-image: url('./images/volgograd.jpg')"></div>
-            <div class="element__info">
-              <h3 class="element__text">Волгоград</h3>
-              <button type="button" class="element__heart"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -83,18 +41,49 @@
     </footer>
   </div>
 
-
-  <div class="popup">
-    <form action="#" class="form-edit popup__form" name = "form-edit">
-      <h2 class="form-edit__title">Редактировать профиль</h2>
-      <input type="text" class="form-edit__input form-edit__input_edit_name" name = "name">
-      <input type="text" class="form-edit__input form-edit__input_edit_job" name = "job">
-      <button type="submit" aria-label="submit" class="form-edit__save">
+  <div class="popup-edit popup">
+    <form action="#" class="form popup__form" name="form-edit">
+      <h2 class="form__title">Редактировать профиль</h2>
+      <input type="text" class="form__input form__input_edit_name" name="name-avatar">
+      <input type="text" class="form__input form__input_edit_job" name="job">
+      <button type="submit" aria-label="submit" class="form__save">
         Сохранить
       </button>
-      <button type="button" aria-label="close" class="form-edit__close"></button>
+      <button type="button" aria-label="close" class="form__close"></button>
     </form>
   </div>
+
+  <div class="popup-add popup">
+    <form action="#" class="form popup__form" name="form-add">
+      <h2 class="form__title">Новое место</h2>
+      <input type="text" class="form__input form__input_add_name" name="name-mesto" placeholder="Название">
+      <input type="text" class="form__input form__input_add_link" name="link" placeholder="Ссылка на картинку">
+      <button type="submit" aria-label="submit" class="form__save">
+        Создать
+      </button>
+      <button type="button" aria-label="close" class="form__close"></button>
+    </form>
+  </div>
+
+  <div class="popup-image popup">
+    <div class="zoom-img popup__form">
+      <img src="" class="zoom-img__img" alt="">
+      <p class="zoom-img__text"></p>
+      <button type="button" class="zoom-img__close"></button>
+    </div>
+  </div>
+
+  <template id="element-mesto">
+    <li class="element">
+      <div class="element__img">
+        <button type="button" class="element__trash"></button>
+      </div>
+      <div class="element__info">
+        <p class="element__text"></p>
+        <button type="button" class="element__heart"></button>
+      </div>
+    </li>
+  </template>
 
   <script src="./scripts/index.js"></script>
 </body>

@@ -6,7 +6,9 @@
   height: 100%;
   z-index: 100;
   background-color: rgba(0, 0, 0, .5);
-  visibility: hidden;
   display: grid;
   grid-template: 1fr max-content 1fr / 1fr max-content 1fr;
-}
+  visibility: collapse;
+  opacity: 0;
+  transition: visibility 1s, opacity 0.5s linear;
+ }
