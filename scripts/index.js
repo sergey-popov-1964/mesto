@@ -7,8 +7,8 @@ const buttonFormEditClose = formEditElement.querySelector('.form__close');
 
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-const nameInput = formEditElement.querySelector('.form__input_edit_name');
-const jobInput = formEditElement.querySelector('.form__input_edit_job');
+// const nameInput = formEditElement.querySelector('.form__input_edit_name');
+// const jobInput = formEditElement.querySelector('.form__input_edit_job');
 
 // Переменные для формы Add
 const buttonFormAddOpen = document.querySelector('.profile__button-add');
@@ -16,8 +16,8 @@ const popupAdd = document.querySelector('.popup-add');
 const formAddElement = popupAdd.querySelector('.form');
 const buttonFormAddClose = formAddElement.querySelector('.form__close');
 
-const placeNameInput = formAddElement.querySelector('.form__input_add_name');
-const placeLinkInput = formAddElement.querySelector('.form__input_add_link');
+// const placeNameInput = formAddElement.querySelector('.form__input_add_name');
+// const placeLinkInput = formAddElement.querySelector('.form__input_add_link');
 
 // Переменные для формы увеличенного просмотра картинки
 const popupZoomImage = document.querySelector('.popup-image');
@@ -25,6 +25,16 @@ const zoomImageForm = popupZoomImage.querySelector('.zoom-img');
 const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
 const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
 const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
+
+const popupElement = document.querySelectorAll('.popup');
+
+const formEdit = document.forms.formedit;
+const nameInput = formEdit.elements.nameavatar;
+const jobInput = formEdit.elements.job;
+
+const formAdd = document.forms.formadd;
+const placeNameInput = formAdd.elements.namemesto;
+const placeLinkInput = formAdd.elements.link;
 
 // Функция открытия попапа с формой
 function openPopup(popup) {
@@ -86,8 +96,8 @@ function addCard(card) {
 }
 
 // Начальная загрузка карточек в DOM
-initialCards.forEach(function (item)  {
-addCard(createCard(item));
+initialCards.forEach(function (item) {
+  addCard(createCard(item));
 });
 
 // Обработка формы Add
@@ -116,7 +126,7 @@ buttonFormEditClose.addEventListener('click', () => {
 });
 
 // Слушатель клика отправки формы Edit
-formEditElement.addEventListener('submit', editProfileSubmitHandler);
+formEdit.addEventListener('submit', editProfileSubmitHandler);
 
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
@@ -131,9 +141,25 @@ buttonFormAddClose.addEventListener('click', () => {
 });
 
 // Слушатель клика отправки формы Add
-formAddElement.addEventListener('submit', formAddSubmitHandler);
+formAdd.addEventListener('submit', formAddSubmitHandler);
 
 // Слушатель клика на кнопке закрытия формы Zoom
 zoomImageClose.addEventListener('click', () => {
   closePopup(popupZoomImage)
 });
+
+popupElement.forEach((item) => {
+  item.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(item)
+    }
+  })
+});
+
+document.addEventListener('keydown', (evt) => {
+  if (evt.key === "Escape") {
+    popupElement.forEach((item) => {
+      closePopup(item)
+    });
+  }
+})
