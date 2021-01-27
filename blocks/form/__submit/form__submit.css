@@ -1,6 +1,6 @@
-.form__save {
-  margin: 46px 0 0;
-  padding: 14px 133px;
+.form__submit {
+  margin: 52px 0 0;
+  padding: 14px 150px;
   border: none;
   outline: none;
   font-family: 'Inter', 'Arial', sans-serif;
@@ -15,12 +15,12 @@
   cursor: pointer;
 }
 
-.form__save:hover {
+.form__submit:hover {
   opacity: .8;
 }
 
 @media screen and (max-width: 618px) {
-  .form__save {
+  .form__submit {
     font-size: 14px;
     line-height: 17px;
     padding: 14px 82px;
