@@ -41,9 +41,12 @@
 @import url('../blocks/form/form.css');
 @import url('../blocks/form/__title/form__title.css');
 @import url('../blocks/form/__input/form__input.css');
-@import url('../blocks/form/__save/form__save.css');
-@import url('../blocks/form/__save/_disabled/form__save_disabled.css');
+@import url('../blocks/form/__input/_error/form__input_error.css');
+@import url('../blocks/form/__input/_type/form__input_type.css');
+@import url('../blocks/form/__submit/form__submit.css');
+@import url('../blocks/form/__submit/_inactive/form__submit_inactive.css');
 @import url('../blocks/form/__close/form__close.css');
+@import url('../blocks/form/__label/form__label.css');
 
 @import url('../blocks/zoom-img/zoom-img.css');
 @import url('../blocks/zoom-img/__close/zoom-img__close.css');

@@ -1,23 +1,11 @@
-// Переменные для формы Edit
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
 const popupEdit = document.querySelector('.popup-edit');
-const formEditElement = popupEdit.querySelector('.form')
-const buttonFormEditClose = formEditElement.querySelector('.form__close');
-
 
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
-// const nameInput = formEditElement.querySelector('.form__input_edit_name');
-// const jobInput = formEditElement.querySelector('.form__input_edit_job');
 
-// Переменные для формы Add
 const buttonFormAddOpen = document.querySelector('.profile__button-add');
 const popupAdd = document.querySelector('.popup-add');
-const formAddElement = popupAdd.querySelector('.form');
-const buttonFormAddClose = formAddElement.querySelector('.form__close');
-
-// const placeNameInput = formAddElement.querySelector('.form__input_add_name');
-// const placeLinkInput = formAddElement.querySelector('.form__input_add_link');
 
 // Переменные для формы увеличенного просмотра картинки
 const popupZoomImage = document.querySelector('.popup-image');
@@ -28,15 +16,19 @@ const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
 
 const popupElement = document.querySelectorAll('.popup');
 
-const formEdit = document.forms.formedit;
-const nameInput = formEdit.elements.nameavatar;
-const jobInput = formEdit.elements.job;
-const buttonFormEditSave = formEdit.elements.editsave;
+// Переменные для формы Edit
+const formEdit = document.forms.form_edit;
+const nameInput = formEdit.elements.edit_name_avatar;
+const jobInput = formEdit.elements.edit_job;
+const buttonFormEditSubmit = formEdit.elements.form_submit;
+const buttonFormEditClose = formEdit.elements.form_close;
 
-const formAdd = document.forms.formadd;
-const placeNameInput = formAdd.elements.namemesto;
-const placeLinkInput = formAdd.elements.link;
-const buttonFormAddSave = formAdd.elements.addsave;
+// Переменные для формы Add
+const formAdd = document.forms.form__add;
+const placeNameInput = formAdd.elements.add_name_mesto;
+const placeLinkInput = formAdd.elements.add_name_link;
+const buttonFormAddSubmit = formAdd.elements.form_submit;
+const buttonFormAddClose = formAdd.elements.form_close;
 
 // Функция открытия попапа с формой
 function openPopup(popup) {
@@ -50,7 +42,6 @@ function closePopup(popup) {
 
 // Обработка формы Edit
 function editProfileSubmitHandler(evt) {
-  evt.preventDefault();
   profileName.textContent = nameInput.value;
   profileJob.textContent = jobInput.value;
   closePopup(popupEdit);
@@ -88,7 +79,6 @@ function createCard(mestoValue) {
       openPopup(popupZoomImage);
     }
   });
-
   return mestoElement;
 }
 
@@ -104,33 +94,19 @@ initialCards.forEach(function (item) {
 
 // Обработка формы Add
 function formAddSubmitHandler(evt) {
-  evt.preventDefault();
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
   addCard(createCard(newMesto));
   closePopup(popupAdd);
-  setSubmitButtonState(buttonFormAddSave, false);
 };
-
-function setSubmitButtonState(button, isFormValid) {
-  if (isFormValid) {
-    button.removeAttribute('disabled');
-    button.classList.remove('form__save_disabled');
-  } else {
-    button.setAttribute('disabled', true);
-    button.classList.add('form__save_disabled');
-  }
-}
-
-// --------------------------------------------------------
-// Объявления слушателей
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
+  clearErrorMessage(formEdit)
+  openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
-  openPopup(popupEdit);
 });
 
 // Слушатель клика на кнопке закрытия формы Edit
@@ -143,9 +119,8 @@ formEdit.addEventListener('submit', editProfileSubmitHandler);
 
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
-  // placeNameInput.value = "";
-  // placeLinkInput.value = "";
   formAdd.reset();
+  clearErrorMessage(formAdd)
   openPopup(popupAdd);
 });
 
@@ -162,6 +137,15 @@ zoomImageClose.addEventListener('click', () => {
   closePopup(popupZoomImage);
 });
 
+// Закрытие попапов при клике на оверлей
+popupElement.forEach((item) => {
+  item.addEventListener('click', (evt) => {
+    if (evt.target === evt.currentTarget) {
+      closePopup(item);
+    }
+  });
+});
+
 // Закрытие попапов при нажатии клавишт Esc
 document.addEventListener('keydown', (evt) => {
   if (evt.key === "Escape") {
@@ -169,15 +153,4 @@ document.addEventListener('keydown', (evt) => {
   }
 })
 
-// Слушатель инпутов формы Add
-formAdd.addEventListener('input', evt => {
-  console.log(evt.target.validity.valid);
-   const isValid = placeNameInput.value.length > 0 && placeLinkInput.value.length > 0;
-   setSubmitButtonState(buttonFormAddSave, isValid);
-})
 
-// Слушатель инпутов формы Edit
-formEdit.addEventListener('input', evt => {
-  const isValid = nameInput.value.length > 0 && jobInput.value.length > 0;
-  setSubmitButtonState(buttonFormEditSave, isValid);
-})
