@@ -89,7 +89,7 @@ function createCard(mestoValue) {
   mestoElementImage.setAttribute("style", "background-image: url(" + mestoValue.link + ")");
   mestoElement.querySelector('.element__text').textContent = mestoValue.name;
 
-  // Слушатели лайка, удаления карточки и превью изображения
+  // Слушатели лайка, удаления карточки и превью увеличенного изображения
   mestoElement.querySelector('.element__heart').addEventListener('click', handleLikeIcon);
 
   mestoElement.querySelector('.element__trash').addEventListener('click', handleDeleteCard);
