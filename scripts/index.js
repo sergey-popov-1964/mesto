@@ -31,8 +31,12 @@ const buttonFormAddSubmit = formAdd.elements.form_submit;
 const buttonFormAddClose = formAdd.elements.form_close;
 
 // Закрытие попапов при нажатии клавишт Esc
-function closePopupEsc() {
-  closePopup(document.querySelector('.popup_active'));
+function closePopupEsc(evt) {
+  if (evt.key === "Escape") {
+    closePopup(document.querySelector('.popup_active'));
+  }
+
+  // closePopup(document.querySelector('.popup_active'));
 }
 
 // Функция открытия попапа с формой
@@ -44,7 +48,7 @@ function openPopup(popup) {
 // Функция закрытия попапа с формой
 function closePopup(popup) {
   popup.classList.remove('popup_active');
-  // document.removeEventListener('keydown', closePopupEsc);
+  document.removeEventListener('keydown', closePopupEsc);
 };
 
 // Обработка формы Edit
@@ -57,6 +61,17 @@ function editProfileSubmitHandler(evt) {
 // Поиск DOM элемента - список карточек
 const listMesto = document.querySelector('.elements__list');
 
+function handleDeleteCard(evt) {
+  evt.target.closest('.element').remove();
+};
+
+function handleLikeIcon(evt) {
+    evt.target.classList.toggle('element__heart_like')
+  };
+
+  function handlePreviewPicture(evt) {
+  //открывает попап с картинкой
+  };
 
 // функция создания по tenmplate карточек и слушателей
 function createCard(mestoValue) {
@@ -68,15 +83,12 @@ function createCard(mestoValue) {
   mestoElementImage.setAttribute("style", "background-image: url(" + mestoValue.link + ")");
   mestoElement.querySelector('.element__text').textContent = mestoValue.name;
 
-  // Слушатель клика на лайке
-  mestoElement.querySelector('.element__heart').addEventListener('click', evt => {
-    evt.target.classList.toggle('element__heart_like');
-  });
+  // Слушатели лайка, удаления карточки и превью изображения
+  mestoElement.querySelector('.element__heart').addEventListener('click', handleLikeIcon);
 
-  // Слушатель клика на корзине удаления
-  mestoElement.querySelector('.element__trash').addEventListener('click', evt => {
-    evt.target.closest('.element').remove();
-  });
+	mestoElement.querySelector('.element__trash').addEventListener('click', handleDeleteCard);
+
+
 
   // Слушатель клика на изображении для просмотра увеличенного изображения
   mestoElementImage.addEventListener('click', evt => {
@@ -154,6 +166,3 @@ popupElement.forEach((item) => {
     }
   });
 });
-
-
-
