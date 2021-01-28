@@ -61,17 +61,23 @@ function editProfileSubmitHandler(evt) {
 // Поиск DOM элемента - список карточек
 const listMesto = document.querySelector('.elements__list');
 
+// Удаление карточки
 function handleDeleteCard(evt) {
   evt.target.closest('.element').remove();
 };
 
+// Установка лайка
 function handleLikeIcon(evt) {
-    evt.target.classList.toggle('element__heart_like')
-  };
+  evt.target.classList.toggle('element__heart_like')
+};
 
-  function handlePreviewPicture(evt) {
-  //открывает попап с картинкой
-  };
+// Превью увеличенного изображения
+function handlePreviewPicture(link, name) {
+  zoomImageImg.setAttribute("src", link);
+  zoomImageText.textContent = name;
+  zoomImageImg.setAttribute("alt", name);
+  openPopup(popupZoomImage);
+};
 
 // функция создания по tenmplate карточек и слушателей
 function createCard(mestoValue) {
@@ -86,17 +92,11 @@ function createCard(mestoValue) {
   // Слушатели лайка, удаления карточки и превью изображения
   mestoElement.querySelector('.element__heart').addEventListener('click', handleLikeIcon);
 
-	mestoElement.querySelector('.element__trash').addEventListener('click', handleDeleteCard);
+  mestoElement.querySelector('.element__trash').addEventListener('click', handleDeleteCard);
 
-
-
-  // Слушатель клика на изображении для просмотра увеличенного изображения
-  mestoElementImage.addEventListener('click', evt => {
+  mestoElementImage.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
-      zoomImageImg.setAttribute("src", mestoValue.link);
-      zoomImageText.textContent = mestoValue.name;
-      zoomImageImg.setAttribute("alt", mestoValue.name);
-      openPopup(popupZoomImage);
+      handlePreviewPicture(mestoValue.link, mestoValue.name);
     }
   });
 
