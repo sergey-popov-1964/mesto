@@ -166,8 +166,3 @@ popupElement.forEach((item) => {
     }
   });
 });
-
-
-
-
-ррррр
