@@ -35,8 +35,6 @@ function closePopupEsc(evt) {
   if (evt.key === "Escape") {
     closePopup(document.querySelector('.popup_active'));
   }
-
-  // closePopup(document.querySelector('.popup_active'));
 }
 
 // Функция открытия попапа с формой
@@ -124,7 +122,14 @@ function addFormSubmitHandler(evt) {
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-  clearErrorMessage(formEdit)
+  clearErrorMessage(formEdit, {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__submit',
+    inactiveButtonClass: 'form__submit_inactive',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__error_active'
+  })
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -141,7 +146,14 @@ formEdit.addEventListener('submit', editProfileSubmitHandler);
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
   formAdd.reset();
-  clearErrorMessage(formAdd)
+  clearErrorMessage(formAdd, {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__submit',
+    inactiveButtonClass: 'form__submit_inactive',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__error_active'
+  })
   openPopup(popupAdd);
 });
 
