@@ -30,14 +30,21 @@ const placeLinkInput = formAdd.elements.add_name_link;
 const buttonFormAddSubmit = formAdd.elements.form_submit;
 const buttonFormAddClose = formAdd.elements.form_close;
 
+// Закрытие попапов при нажатии клавишт Esc
+function closePopupEsc() {
+  closePopup(document.querySelector('.popup_active'));
+}
+
 // Функция открытия попапа с формой
 function openPopup(popup) {
   popup.classList.add('popup_active');
+  document.addEventListener('keydown', closePopupEsc);
 };
 
 // Функция закрытия попапа с формой
 function closePopup(popup) {
   popup.classList.remove('popup_active');
+  // document.removeEventListener('keydown', closePopupEsc);
 };
 
 // Обработка формы Edit
@@ -49,6 +56,7 @@ function editProfileSubmitHandler(evt) {
 
 // Поиск DOM элемента - список карточек
 const listMesto = document.querySelector('.elements__list');
+
 
 // функция создания по tenmplate карточек и слушателей
 function createCard(mestoValue) {
@@ -79,6 +87,7 @@ function createCard(mestoValue) {
       openPopup(popupZoomImage);
     }
   });
+
   return mestoElement;
 }
 
@@ -93,7 +102,7 @@ initialCards.forEach(function (item) {
 });
 
 // Обработка формы Add
-function formAddSubmitHandler(evt) {
+function addFormSubmitHandler(evt) {
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
@@ -130,7 +139,7 @@ buttonFormAddClose.addEventListener('click', () => {
 });
 
 // Слушатель клика отправки формы Add
-formAdd.addEventListener('submit', formAddSubmitHandler);
+formAdd.addEventListener('submit', addFormSubmitHandler);
 
 // Слушатель клика на кнопке закрытия формы Zoom
 zoomImageClose.addEventListener('click', () => {
@@ -146,11 +155,5 @@ popupElement.forEach((item) => {
   });
 });
 
-// Закрытие попапов при нажатии клавишт Esc
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === "Escape") {
-    closePopup(document.querySelector('.popup_active'));
-  }
-})
 
 
