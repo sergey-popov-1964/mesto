@@ -30,6 +30,15 @@ const placeLinkInput = formAdd.elements.add_name_link;
 const buttonFormAddSubmit = formAdd.elements.form_submit;
 const buttonFormAddClose = formAdd.elements.form_close;
 
+const configValidation = {
+    formSelector: '.form',
+    inputSelector: '.form__input',
+    submitButtonSelector: '.form__submit',
+    inactiveButtonClass: 'form__submit_inactive',
+    inputErrorClass: 'form__input_type_error',
+    errorClass: 'form__error_active'
+  };
+
 // Закрытие попапов при нажатии клавишт Esc
 function closePopupEsc(evt) {
   if (evt.key === "Escape") {
@@ -122,14 +131,7 @@ function addFormSubmitHandler(evt) {
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-  clearErrorMessage(formEdit, {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__submit',
-    inactiveButtonClass: 'form__submit_inactive',
-    inputErrorClass: 'form__input_type_error',
-    errorClass: 'form__error_active'
-  })
+  clearErrorMessage(formEdit, configValidation)
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -146,14 +148,7 @@ formEdit.addEventListener('submit', editProfileSubmitHandler);
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
   formAdd.reset();
-  clearErrorMessage(formAdd, {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__submit',
-    inactiveButtonClass: 'form__submit_inactive',
-    inputErrorClass: 'form__input_type_error',
-    errorClass: 'form__error_active'
-  })
+  clearErrorMessage(formAdd, configValidation)
   openPopup(popupAdd);
 });
 
