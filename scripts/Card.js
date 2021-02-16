@@ -1,14 +1,14 @@
 import {
-  zoomImageImg,
-  zoomImageText,
-  openPopup,
-  popupZoomImage
+  openPopup
 } from './index.js';
 
 class Card {
   constructor(mestoValue) {
     this._name = mestoValue.name;
     this._link = mestoValue.link;
+    this._popupZoomImage = document.querySelector('.popup-image');
+    this._zoomImageImg = this._popupZoomImage.querySelector('.zoom-img__img');
+    this._zoomImageText = this._popupZoomImage.querySelector('.zoom-img__text');
   }
 
   _getTemplate() {
@@ -30,10 +30,10 @@ class Card {
   };
 
   _handlePreviewPicture() {
-    zoomImageImg.setAttribute("src", this._link);
-    zoomImageText.textContent = this._name;
-    zoomImageImg.setAttribute("alt", this._name);
-    openPopup(popupZoomImage);
+    this._zoomImageImg.src = this._link;
+    this._zoomImageText.textContent = this._name;
+    this._zoomImageImg.alt = this._name;
+    openPopup(this._popupZoomImage);
   };
 
   _setEventListeners() {

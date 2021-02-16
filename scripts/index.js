@@ -1,5 +1,6 @@
 import initialCards from './initial-сards.js';
 import Card from './Card.js';
+import FormValidator from './FormValidator.js';
 
 
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
@@ -12,10 +13,8 @@ const buttonFormAddOpen = document.querySelector('.profile__button-add');
 const popupAdd = document.querySelector('.popup-add');
 
 // Переменные для формы увеличенного просмотра картинки
-export const popupZoomImage = document.querySelector('.popup-image');
-const zoomImageForm = popupZoomImage.querySelector('.zoom-img');
-export const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
-export const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
+const popupZoomImage = document.querySelector('.popup-image');
+const zoomImageForm = document.querySelector('.zoom-img');
 const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
 
 const popupElement = document.querySelectorAll('.popup');
@@ -25,24 +24,13 @@ const popupElement = document.querySelectorAll('.popup');
 const formEdit = document.forms.form_edit;
 const nameInput = formEdit.elements.edit_name_avatar;
 const jobInput = formEdit.elements.edit_job;
-const buttonFormEditSubmit = formEdit.elements.form_submit;
 const buttonFormEditClose = formEdit.elements.form_close;
 
 // Переменные для формы Add
 const formAdd = document.forms.form__add;
 const placeNameInput = formAdd.elements.add_name_mesto;
 const placeLinkInput = formAdd.elements.add_name_link;
-const buttonFormAddSubmit = formAdd.elements.form_submit;
 const buttonFormAddClose = formAdd.elements.form_close;
-
-export const configValidation = {
-  formSelector: '.form',
-  inputSelector: '.form__input',
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_inactive',
-  inputErrorClass: 'form__input_type_error',
-  errorClass: 'form__error_active'
-};
 
 // Закрытие попапов при нажатии клавишт Esc
 function closePopupEsc(evt) {
@@ -74,8 +62,8 @@ function editProfileSubmitHandler(evt) {
 const listMesto = document.querySelector('.elements__list');
 
 // Функция добавления карточки в DOM
-function addCard(newMesto) {
-  const card = new Card(newMesto);
+function addCard(newMesto, popupZoomImage) {
+  const card = new Card(newMesto, popupZoomImage);
   const mestoElement = card.generateMesto();
   listMesto.prepend(mestoElement);
 }
@@ -98,7 +86,7 @@ function addFormSubmitHandler(evt) {
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-  // clearErrorMessage(formEdit, configValidation)
+  clearErrorMessage(formEdit, configValidation)
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -115,7 +103,7 @@ formEdit.addEventListener('submit', editProfileSubmitHandler);
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
   formAdd.reset();
-  // clearErrorMessage(formAdd, configValidation)
+  clearErrorMessage(formAdd, configValidation)
   openPopup(popupAdd);
 });
 
@@ -140,3 +128,38 @@ popupElement.forEach((item) => {
     }
   });
 });
+
+// Объект с настройками для FormValidator
+const configValidation = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'form__submit_inactive',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__error_active'
+};
+
+// Для каждой проверяемой формы создается экземпляр класса FormValidator
+const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
+formList.forEach((formElement) => {
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+  });
+  const formValidate = new FormValidator(configValidation, formElement);
+
+  formValidate.enableValidation();
+});
+
+
+// подготовка полей и submit при повторном вызове формы
+function clearErrorMessage(formElement, configValidation) {
+  formElement.querySelector(configValidation.submitButtonSelector).classList.add(configValidation.inactiveButtonClass)
+  formElement.querySelector(configValidation.submitButtonSelector).setAttribute("disabled", "disabled");
+
+  const formList = Array.from(formElement.querySelectorAll(configValidation.inputSelector));
+  formList.forEach((inputElement) => {
+    inputElement.classList.remove(configValidation.inputErrorClass);
+    inputElement.nextElementSibling.classList.remove(configValidation.errorClass);
+    inputElement.nextElementSibling.textContent = '';
+  });
+}
