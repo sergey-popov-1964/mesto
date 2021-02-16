@@ -24,3 +24,5 @@ const initialCards = [{
   link: 'https://cdn.pixabay.com/photo/2020/05/04/04/07/monument-5127638_1280.jpg'
 }
 ];
+
+export default initialCards
