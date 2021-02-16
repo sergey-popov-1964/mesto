@@ -1,4 +1,9 @@
-import { zoomImageImg, zoomImageText, openPopup, popupZoomImage } from './index.js';
+import {
+  zoomImageImg,
+  zoomImageText,
+  openPopup,
+  popupZoomImage
+} from './index.js';
 
 class Card {
   constructor(mestoValue) {
@@ -10,10 +15,26 @@ class Card {
     const mestoElement = document
       .querySelector('.element-mesto')
       .content
+      .querySelector('.element')
       .cloneNode(true);
 
     return mestoElement;
   }
+
+  _handleLikeIcon() {
+    this._element.querySelector('.element__heart').classList.toggle('element__heart_like');
+  };
+
+  _handleDeleteCard() {
+    this._element.remove();
+  };
+
+  _handlePreviewPicture() {
+    zoomImageImg.setAttribute("src", this._link);
+    zoomImageText.textContent = this._name;
+    zoomImageImg.setAttribute("alt", this._name);
+    openPopup(popupZoomImage);
+  };
 
   _setEventListeners() {
     this._element.querySelector('.element__heart').addEventListener('click', () => {
@@ -26,33 +47,18 @@ class Card {
 
     this._element.querySelector('.element__img').addEventListener('click', (evt) => {
       if (evt.target === evt.currentTarget) {
-      this._handlePreviewPicture();
+        this._handlePreviewPicture();
       }
     });
 
   }
-
-  _handleLikeIcon() {
-        this._element.querySelector('.element__heart').classList.toggle('element__heart_like');
-  };
-
-  _handleDeleteCard() {
-    this._element.querySelector('.element').remove();
-  };
-
-  _handlePreviewPicture() {
-    zoomImageImg.setAttribute("src", this._link);
-    zoomImageText.textContent = this._name;
-    zoomImageImg.setAttribute("alt", this._name);
-    openPopup(popupZoomImage);
-  };
 
   generateMesto() {
     this._element = this._getTemplate();
     this._setEventListeners();
     this._element.querySelector('.element__img').style.backgroundImage = "url(" + this._link + ")";
     this._element.querySelector('.element__text').textContent = this._name;
-     return this._element;
+    return this._element;
   }
 }
 
