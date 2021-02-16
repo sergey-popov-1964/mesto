@@ -1,3 +1,7 @@
+import initialCards from './initial-сards.js';
+import Card from './Card.js';
+
+
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
 const popupEdit = document.querySelector('.popup-edit');
 
@@ -8,13 +12,14 @@ const buttonFormAddOpen = document.querySelector('.profile__button-add');
 const popupAdd = document.querySelector('.popup-add');
 
 // Переменные для формы увеличенного просмотра картинки
-const popupZoomImage = document.querySelector('.popup-image');
+export const popupZoomImage = document.querySelector('.popup-image');
 const zoomImageForm = popupZoomImage.querySelector('.zoom-img');
-const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
-const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
+export const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
+export const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
 const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
 
 const popupElement = document.querySelectorAll('.popup');
+
 
 // Переменные для формы Edit
 const formEdit = document.forms.form_edit;
@@ -30,14 +35,14 @@ const placeLinkInput = formAdd.elements.add_name_link;
 const buttonFormAddSubmit = formAdd.elements.form_submit;
 const buttonFormAddClose = formAdd.elements.form_close;
 
-const configValidation = {
-    formSelector: '.form',
-    inputSelector: '.form__input',
-    submitButtonSelector: '.form__submit',
-    inactiveButtonClass: 'form__submit_inactive',
-    inputErrorClass: 'form__input_type_error',
-    errorClass: 'form__error_active'
-  };
+export const configValidation = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'form__submit_inactive',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__error_active'
+};
 
 // Закрытие попапов при нажатии клавишт Esc
 function closePopupEsc(evt) {
@@ -47,7 +52,7 @@ function closePopupEsc(evt) {
 }
 
 // Функция открытия попапа с формой
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_active');
   document.addEventListener('keydown', closePopupEsc);
 };
@@ -68,56 +73,18 @@ function editProfileSubmitHandler(evt) {
 // Поиск DOM элемента - список карточек
 const listMesto = document.querySelector('.elements__list');
 
-// Удаление карточки
-function handleDeleteCard(evt) {
-  evt.target.closest('.element').remove();
-};
-
-// Установка лайка
-function handleLikeIcon(evt) {
-  evt.target.classList.toggle('element__heart_like')
-};
-
-// Превью увеличенного изображения
-function handlePreviewPicture(link, name) {
-  zoomImageImg.setAttribute("src", link);
-  zoomImageText.textContent = name;
-  zoomImageImg.setAttribute("alt", name);
-  openPopup(popupZoomImage);
-};
-
-// функция создания по tenmplate карточек и слушателей
-function createCard(mestoValue) {
-  const mestoTemplate = document.querySelector('#element-mesto').content;
-  const mestoElement = mestoTemplate.cloneNode(true);
-  const mestoElementImage = mestoElement.querySelector('.element__img');
-
-  // Присваивание аттрибутов (ссылки на изображение и наименования места)
-  mestoElementImage.setAttribute("style", "background-image: url(" + mestoValue.link + ")");
-  mestoElement.querySelector('.element__text').textContent = mestoValue.name;
-
-  // Слушатели лайка, удаления карточки и превью увеличенного изображения
-  mestoElement.querySelector('.element__heart').addEventListener('click', handleLikeIcon);
-
-  mestoElement.querySelector('.element__trash').addEventListener('click', handleDeleteCard);
-
-  mestoElementImage.addEventListener('click', (evt) => {
-    if (evt.target === evt.currentTarget) {
-      handlePreviewPicture(mestoValue.link, mestoValue.name);
-    }
-  });
-
-  return mestoElement;
-}
-
 // Функция добавления карточки в DOM
-function addCard(card) {
-  listMesto.prepend(card);
+function addCard(newMesto) {
+  const card = new Card(newMesto);
+  const mestoElement = card.generateMesto();
+  listMesto.prepend(mestoElement);
 }
 
 // Начальная загрузка карточек в DOM
 initialCards.forEach(function (item) {
-  addCard(createCard(item));
+  const card = new Card(item);
+  const mestoElement = card.generateMesto();
+  listMesto.prepend(mestoElement);
 });
 
 // Обработка формы Add
@@ -125,13 +92,13 @@ function addFormSubmitHandler(evt) {
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
-  addCard(createCard(newMesto));
+  addCard(newMesto);
   closePopup(popupAdd);
 };
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-  clearErrorMessage(formEdit, configValidation)
+  // clearErrorMessage(formEdit, configValidation)
   openPopup(popupEdit);
   nameInput.value = profileName.textContent;
   jobInput.value = profileJob.textContent;
@@ -148,7 +115,7 @@ formEdit.addEventListener('submit', editProfileSubmitHandler);
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
   formAdd.reset();
-  clearErrorMessage(formAdd, configValidation)
+  // clearErrorMessage(formAdd, configValidation)
   openPopup(popupAdd);
 });
 

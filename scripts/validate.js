@@ -1,3 +1,6 @@
+import { configValidation } from './index.js'
+
+
 // Валидация форм
 const isValid = (formElement, inputElement, config) => {
   if (!inputElement.validity.valid) {
@@ -73,3 +76,6 @@ function clearErrorMessage(formElement, config) {
 }
 
 enableValidation(configValidation);
+
+
+export { clearErrorMessage };
