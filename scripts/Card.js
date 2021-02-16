@@ -1,14 +1,9 @@
-import {
-  openPopup
-} from './index.js';
-
 class Card {
   constructor(mestoValue) {
     this._name = mestoValue.name;
     this._link = mestoValue.link;
-    this._popupZoomImage = document.querySelector('.popup-image');
-    this._zoomImageImg = this._popupZoomImage.querySelector('.zoom-img__img');
-    this._zoomImageText = this._popupZoomImage.querySelector('.zoom-img__text');
+    this._zoomImageImg = document.querySelector('.zoom-img__img');
+    this._zoomImageText = document.querySelector('.zoom-img__text');
   }
 
   _getTemplate() {
@@ -29,11 +24,19 @@ class Card {
     this._element.remove();
   };
 
+  _closePopupPreviewPicture(evt) {
+    if (evt.key === "Escape") {
+      document.querySelector('.popup-image').classList.remove('popup_active');
+      document.removeEventListener('keydown', this._closePopupPreviewPicture);
+    }
+  }
+
   _handlePreviewPicture() {
     this._zoomImageImg.src = this._link;
     this._zoomImageText.textContent = this._name;
     this._zoomImageImg.alt = this._name;
-    openPopup(this._popupZoomImage);
+    document.querySelector('.popup-image').classList.add('popup_active');
+    document.addEventListener('keydown', this._closePopupPreviewPicture);
   };
 
   _setEventListeners() {
