@@ -2,7 +2,6 @@ import initialCards from './initial-сards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 
-
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
 const popupEdit = document.querySelector('.popup-edit');
 
@@ -14,11 +13,12 @@ const popupAdd = document.querySelector('.popup-add');
 
 // Переменные для формы увеличенного просмотра картинки
 const popupZoomImage = document.querySelector('.popup-image');
-const zoomImageForm = document.querySelector('.zoom-img');
+const zoomImageForm = popupZoomImage.querySelector('.zoom-img');
+const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
+const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
 const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
 
-const popupElement = document.querySelectorAll('.popup');
-
+const popupElements = document.querySelectorAll('.popup');
 
 // Переменные для формы Edit
 const formEdit = document.forms.form_edit;
@@ -58,21 +58,32 @@ function editProfileSubmitHandler(evt) {
   closePopup(popupEdit);
 };
 
+// Обраблтка клика на изображении в карточке
+function handleCardClick(name, link) {
+  zoomImageImg.src = link
+  zoomImageText.textContent = name
+  zoomImageImg.alt = name;
+  openPopup(popupZoomImage)
+}
+
 // Поиск DOM элемента - список карточек
 const listMesto = document.querySelector('.elements__list');
 
-// Функция добавления карточки в DOM
-function addCard(newMesto, popupZoomImage) {
-  const card = new Card(newMesto, popupZoomImage);
+// Возвращает новую карточку
+function createCard(newMesto) {
+  const card = new Card(newMesto, '.element-mesto', handleCardClick);
   const mestoElement = card.generateMesto();
-  listMesto.prepend(mestoElement);
+  return mestoElement;
+}
+
+// Функция добавления карточки в DOM
+function addCard(card) {
+  listMesto.prepend(card);
 }
 
 // Начальная загрузка карточек в DOM
 initialCards.forEach(function (item) {
-  const card = new Card(item);
-  const mestoElement = card.generateMesto();
-  listMesto.prepend(mestoElement);
+  addCard(createCard(item));
 });
 
 // Обработка формы Add
@@ -80,7 +91,7 @@ function addFormSubmitHandler(evt) {
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
-  addCard(newMesto);
+  addCard(createCard(newMesto));
   closePopup(popupAdd);
 };
 
@@ -121,7 +132,7 @@ zoomImageClose.addEventListener('click', () => {
 });
 
 // Закрытие попапов при клике на оверлей
-popupElement.forEach((item) => {
+popupElements.forEach((item) => {
   item.addEventListener('click', (evt) => {
     if (evt.target === evt.currentTarget) {
       closePopup(item);
@@ -150,14 +161,12 @@ formList.forEach((formElement) => {
   formValidate.enableValidation();
 });
 
-
 // подготовка полей и submit при повторном вызове формы
 function clearErrorMessage(formElement, configValidation) {
   formElement.querySelector(configValidation.submitButtonSelector).classList.add(configValidation.inactiveButtonClass)
   formElement.querySelector(configValidation.submitButtonSelector).setAttribute("disabled", "disabled");
-
-  const formList = Array.from(formElement.querySelectorAll(configValidation.inputSelector));
-  formList.forEach((inputElement) => {
+  const inputList = Array.from(formElement.querySelectorAll(configValidation.inputSelector));
+  inputList.forEach((inputElement) => {
     inputElement.classList.remove(configValidation.inputErrorClass);
     inputElement.nextElementSibling.classList.remove(configValidation.errorClass);
     inputElement.nextElementSibling.textContent = '';
