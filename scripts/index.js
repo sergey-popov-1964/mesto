@@ -1,37 +1,37 @@
 import initialCards from './initial-сards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import Popup from './Popup.js';
+import PopupWithForm from './PopupWithForm.js';
+import PopupWithImage from './PopupWithImage.js';
 
-const popupAddMesto = new Popup('.popup-add');
-const popupEditProfile = new Popup('.popup-edit');
-const popupPreviewImage = new Popup('.popup-image');
+
+
+
+//-------------------------------------------------------------------------------
+// Создание новых объектов
+//-------------------------------------------------------------------------------
+const popupAddMesto = new PopupWithForm('.popup-add', addFormSubmitHandler);
+popupAddMesto._setEventListeners();
+
+const popupEditProfile = new PopupWithForm('.popup-edit', editProfileSubmitHandler);
+popupEditProfile._setEventListeners();
+
+const popupPreviewImage = new PopupWithImage('.popup-image');
+popupPreviewImage._setEventListeners();
+
 
 
 
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
-// const popupEdit = document.querySelector('.popup-edit');
-
 const profileName = document.querySelector('.profile__name');
 const profileJob = document.querySelector('.profile__job');
 
 const buttonFormAddOpen = document.querySelector('.profile__button-add');
-// const popupAdd = document.querySelector('.popup-add');
-
-// Переменные для формы увеличенного просмотра картинки
-const popupZoomImage = document.querySelector('.popup-image');
-const zoomImageForm = popupZoomImage.querySelector('.zoom-img');
-const zoomImageImg = zoomImageForm.querySelector('.zoom-img__img');
-const zoomImageText = zoomImageForm.querySelector('.zoom-img__text');
-const zoomImageClose = zoomImageForm.querySelector('.zoom-img__close');
-
-// const popupElements = document.querySelectorAll('.popup');
 
 // Переменные для формы Edit
 const formEdit = document.forms.form_edit;
 const nameInput = formEdit.elements.edit_name_avatar;
 const jobInput = formEdit.elements.edit_job;
-// const buttonFormEditClose = formEdit.elements.form_close;
 
 // Переменные для формы Add
 const formAdd = document.forms.form__add;
@@ -47,12 +47,8 @@ function editProfileSubmitHandler(evt) {
 
 // Обраблтка клика на изображении в карточке
 function handleCardClick(name, link) {
-  zoomImageImg.src = link
-  zoomImageText.textContent = name
-  zoomImageImg.alt = name;
-  popupPreviewImage.open();
+  popupPreviewImage.open(name, link);
 }
-
 
 // Обработка формы Add
 function addFormSubmitHandler(evt) {
@@ -71,25 +67,11 @@ buttonFormEditOpen.addEventListener('click', () => {
   jobInput.value = profileJob.textContent;
 });
 
-// Слушатель клика отправки формы Edit
-formEdit.addEventListener('submit', editProfileSubmitHandler);
-
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
-  formAdd.reset();
   clearErrorMessage(formAdd, configValidation)
   popupAddMesto.open();
 });
-
-// Слушатель клика отправки формы Add
-formAdd.addEventListener('submit', addFormSubmitHandler);
-
-// Слушатель клика на кнопке закрытия формы Zoom
-zoomImageClose.addEventListener('click', () => {
-  popupPreviewImage.close();
-});
-
-
 
 //-------------------------------------------------------------------------------
 // Добавление карточек в DOM

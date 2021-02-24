@@ -7,6 +7,7 @@ class Popup {
   _handleEscClose(evt) {
     if (evt.key === "Escape") {
       this._popupSelector.classList.remove('popup_active');
+      this.close();
     }
   }
 
@@ -14,7 +15,6 @@ class Popup {
   open() {
     this._popupSelector.classList.add('popup_active');
     document.addEventListener('keydown', this._handleEscClose.bind(this));
-    this._setEventListeners()
   };
 
   // Функция закрытия попапа с формой
@@ -28,7 +28,7 @@ class Popup {
     this._popupCloseButton.addEventListener('click', () => {
       this.close();
     });
-    
+
     // Закрытие попапов при клике на оверлей
     this._popupSelector.addEventListener('click', (evt) => {
       if (evt.target === evt.currentTarget) {
@@ -37,6 +37,7 @@ class Popup {
     })
 
   }
+
 }
 
-export default Popup;
+  export default Popup;
