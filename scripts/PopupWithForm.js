@@ -22,7 +22,6 @@ class PopupWithForm extends Popup {
     console.log(this._formElement)
     const inputList = Array.from(this._formElement.querySelectorAll('.form__input'));
     inputList.forEach((inputElement) => {
-      console.log(inputElement);
     })
   }
 

@@ -3,6 +3,7 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import PopupWithForm from './PopupWithForm.js';
 import PopupWithImage from './PopupWithImage.js';
+import UserInfo from './UserInfo.js';
 
 
 
@@ -19,38 +20,28 @@ popupEditProfile._setEventListeners();
 const popupPreviewImage = new PopupWithImage('.popup-image');
 popupPreviewImage._setEventListeners();
 
+const mestoUserInfo = new UserInfo('.profile__name', '.profile__job');
 
-
-
-const buttonFormEditOpen = document.querySelector('.profile__button-edit');
-const profileName = document.querySelector('.profile__name');
-const profileJob = document.querySelector('.profile__job');
-
-const buttonFormAddOpen = document.querySelector('.profile__button-add');
 
 // Переменные для формы Edit
+const buttonFormEditOpen = document.querySelector('.profile__button-edit');
 const formEdit = document.forms.form_edit;
 const nameInput = formEdit.elements.edit_name_avatar;
 const jobInput = formEdit.elements.edit_job;
 
 // Переменные для формы Add
+const buttonFormAddOpen = document.querySelector('.profile__button-add');
 const formAdd = document.forms.form__add;
 const placeNameInput = formAdd.elements.add_name_mesto;
 const placeLinkInput = formAdd.elements.add_name_link;
 
-// Обработка формы Edit
+// Обработка submit формы Edit
 function editProfileSubmitHandler(evt) {
-  profileName.textContent = nameInput.value;
-  profileJob.textContent = jobInput.value;
+  mestoUserInfo.setUserInfo(nameInput.value, jobInput.value);
   popupEditProfile.close();
 };
 
-// Обраблтка клика на изображении в карточке
-function handleCardClick(name, link) {
-  popupPreviewImage.open(name, link);
-}
-
-// Обработка формы Add
+// Обработка submit формы Add
 function addFormSubmitHandler(evt) {
   const newMesto = {};
   newMesto.name = placeNameInput.value;
@@ -61,17 +52,23 @@ function addFormSubmitHandler(evt) {
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-  clearErrorMessage(formEdit, configValidation)
+  clearErrorMessage(formEdit, configValidation);
+  let objUserInfo = mestoUserInfo.getUserInfo();
+  nameInput.value = objUserInfo.name;
+  jobInput.value = objUserInfo.info;
   popupEditProfile.open();
-  nameInput.value = profileName.textContent;
-  jobInput.value = profileJob.textContent;
 });
 
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
-  clearErrorMessage(formAdd, configValidation)
+  clearErrorMessage(formAdd, configValidation);
   popupAddMesto.open();
 });
+
+// Обработка клика на изображении в карточке
+function handleCardClick(name, link) {
+  popupPreviewImage.open(name, link);
+}
 
 //-------------------------------------------------------------------------------
 // Добавление карточек в DOM
@@ -123,7 +120,7 @@ formList.forEach((formElement) => {
   formValidate.enableValidation();
 });
 
-// подготовка полей и submit при повторном вызове формы
+// сброс полей валидации при открытии формы
 function clearErrorMessage(formElement, configValidation) {
   formElement.querySelector(configValidation.submitButtonSelector).classList.add(configValidation.inactiveButtonClass)
   formElement.querySelector(configValidation.submitButtonSelector).setAttribute("disabled", "disabled");
@@ -134,6 +131,3 @@ function clearErrorMessage(formElement, configValidation) {
     inputElement.nextElementSibling.textContent = '';
   });
 }
-
-
-
