@@ -1,8 +1,7 @@
 import initialCards from './initial-сards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import PopupWithForm from './PopupWithForm.js';
-import PopupWithImage from './PopupWithImage.js';
+import {PopupWithForm, PopupWithImage}from './Popup.js';
 import UserInfo from './UserInfo.js';
 
 
@@ -53,7 +52,7 @@ function addFormSubmitHandler(evt) {
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
   clearErrorMessage(formEdit, configValidation);
-  let objUserInfo = mestoUserInfo.getUserInfo();
+  const objUserInfo = mestoUserInfo.getUserInfo();
   nameInput.value = objUserInfo.name;
   jobInput.value = objUserInfo.info;
   popupEditProfile.open();
