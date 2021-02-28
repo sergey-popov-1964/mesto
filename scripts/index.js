@@ -3,8 +3,7 @@ import Card from './Card.js';
 import FormValidator from './FormValidator.js';
 import {PopupWithForm, PopupWithImage}from './Popup.js';
 import UserInfo from './UserInfo.js';
-
-
+import Section from "./Section.js";
 
 
 //-------------------------------------------------------------------------------
@@ -20,6 +19,9 @@ const popupPreviewImage = new PopupWithImage('.popup-image');
 popupPreviewImage._setEventListeners();
 
 const mestoUserInfo = new UserInfo('.profile__name', '.profile__job');
+
+const addSection = new Section([initialCards, createCard], '.elements__list')
+
 
 
 // Переменные для формы Edit
@@ -38,16 +40,16 @@ const placeLinkInput = formAdd.elements.add_name_link;
 function editProfileSubmitHandler(evt) {
   mestoUserInfo.setUserInfo(nameInput.value, jobInput.value);
   popupEditProfile.close();
-};
+}
 
 // Обработка submit формы Add
 function addFormSubmitHandler(evt) {
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
-  addCard(createCard(newMesto));
+  addSection.addItem(createCard(newMesto));
   popupAddMesto.close();
-};
+}
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
@@ -73,25 +75,14 @@ function handleCardClick(name, link) {
 // Добавление карточек в DOM
 //-------------------------------------------------------------------------------
 
-// Поиск DOM элемента - список карточек
-const listMesto = document.querySelector('.elements__list');
-
 // Возвращает новую карточку
 function createCard(newMesto) {
   const card = new Card(newMesto, '.element-mesto', handleCardClick);
-  const mestoElement = card.generateMesto();
-  return mestoElement;
+  return card.generateMesto();
 }
 
-// Функция добавления карточки в DOM
-function addCard(card) {
-  listMesto.prepend(card);
-}
-
-// Начальная загрузка карточек в DOM
-initialCards.forEach(function (item) {
-  addCard(createCard(item));
-});
+//Добавление в DOM первоначального массива карточек
+addSection.addCardsToDom();
 
 
 //-------------------------------------------------------------------------------
