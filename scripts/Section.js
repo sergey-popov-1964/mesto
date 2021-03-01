@@ -1,7 +1,7 @@
-class Section {
-  constructor(data, itemSelector) {
-    this._items = data[0]  // Объект карточки
-    this._renderer = data[1]; //  функция createCard, возвращающая созданную карточку
+export default class Section {
+  constructor({data, renderer}, itemSelector) {
+    this._items = data  // Объект карточки
+    this._renderer = renderer; //  функция createCard, возвращающая созданную карточку
     this._itemSelector = document.querySelector(itemSelector); // Селектор куда вставляется карточка
   }
 
@@ -18,6 +18,4 @@ class Section {
   }
 
 }
-
-export default Section;
 

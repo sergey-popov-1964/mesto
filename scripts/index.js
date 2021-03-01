@@ -1,9 +1,10 @@
 import initialCards from './initial-сards.js';
 import Card from './Card.js';
 import FormValidator from './FormValidator.js';
-import {PopupWithForm, PopupWithImage}from './Popup.js';
 import UserInfo from './UserInfo.js';
 import Section from "./Section.js";
+import PopupWithImage from "./PopupWithImage.js";
+import PopupWithForm from './PopupWithForm.js';
 
 
 //-------------------------------------------------------------------------------
@@ -18,11 +19,9 @@ popupEditProfile._setEventListeners();
 const popupPreviewImage = new PopupWithImage('.popup-image');
 popupPreviewImage._setEventListeners();
 
-const mestoUserInfo = new UserInfo('.profile__name', '.profile__job');
+const mestoUserInfo = new UserInfo({name:'.profile__name', info:'.profile__job'});
 
-const addSection = new Section([initialCards, createCard], '.elements__list')
-
-
+const addSection = new Section({data: initialCards, renderer: createCard}, '.elements__list');
 
 // Переменные для формы Edit
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
@@ -38,12 +37,14 @@ const placeLinkInput = formAdd.elements.add_name_link;
 
 // Обработка submit формы Edit
 function editProfileSubmitHandler(evt) {
+  evt.preventDefault();
   mestoUserInfo.setUserInfo(nameInput.value, jobInput.value);
   popupEditProfile.close();
 }
 
 // Обработка submit формы Add
 function addFormSubmitHandler(evt) {
+  evt.preventDefault();
   const newMesto = {};
   newMesto.name = placeNameInput.value;
   newMesto.link = placeLinkInput.value;
