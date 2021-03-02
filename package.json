@@ -1,0 +1,26 @@
+{
+  "name": "yandex.praktikum",
+  "version": "0.0.1",
+  "description": "Learning platform",
+  "main": "index.js",
+  "scripts": {
+    "build": "rimraf dist && webpack --mode production",
+    "dev": "webpack serve"
+  },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergey-popov-1964/mesto.git"
+  },
+  "author": "Sergei Popov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergey-popov-1964/mesto/issues"
+  },
+  "homepage": "https://github.com/sergey-popov-1964/mesto#readme",
+  "devDependencies": {
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  }
+}
