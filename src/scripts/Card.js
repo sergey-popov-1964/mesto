@@ -1,4 +1,4 @@
-class Card {
+export default class Card {
   constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
@@ -7,13 +7,11 @@ class Card {
   }
 
   _getTemplate() {
-    const mestoElement = document
+    return document
       .querySelector(this._cardSelector)
       .content
       .querySelector('.element')
       .cloneNode(true);
-
-    return mestoElement;
   }
 
   _handleLikeIcon() {
@@ -49,5 +47,3 @@ class Card {
     return this._element;
   }
 }
-
-export default Card;

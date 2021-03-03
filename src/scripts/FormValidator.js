@@ -1,12 +1,12 @@
 class FormValidator {
   constructor(configValidation, formElement) {
     this._formSelector = configValidation.formSelector,
-    this._inputSelector = configValidation.inputSelector,
-    this._submitButtonSelector = configValidation.submitButtonSelector,
-    this._inactiveButtonClass = configValidation.inactiveButtonClass,
-    this._inputErrorClass = configValidation.inputErrorClass,
-    this._errorClass = configValidation.errorClass,
-    this._formElement = formElement
+      this._inputSelector = configValidation.inputSelector,
+      this._submitButtonSelector = configValidation.submitButtonSelector,
+      this._inactiveButtonClass = configValidation.inactiveButtonClass,
+      this._inputErrorClass = configValidation.inputErrorClass,
+      this._errorClass = configValidation.errorClass,
+      this._formElement = formElement
   }
 
   _isValid(inputElement) {
@@ -47,7 +47,7 @@ class FormValidator {
     }
   };
 
-  enableValidation() {
+    enableValidation() {
     const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     const buttonElement = this._formElement.querySelector(this._submitButtonSelector);
     this._toggleButtonState(inputList, buttonElement);
