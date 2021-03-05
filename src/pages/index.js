@@ -33,17 +33,16 @@ formList.forEach((formElement) => {
   formValidate.enableValidation();
   validatorList[formElement.name] = formValidate //добавление инстанса в объект
 });
+//запись в константы инстансов класса formValidate для форм
+const validateFormAdd = validatorList[document.querySelector('.popup-add').querySelector('.form').name];
+const validateFormEdit = validatorList[document.querySelector('.popup-edit').querySelector('.form').name];
 
-//запись в константу инстанса класса formValidate для формы Add
-const  validateFormAdd = validatorList[document.querySelector('.popup-add').querySelector('.form').name];
 //Создание инстанса для попапа формы Add
-const popupAddMesto = new PopupWithForm('.popup-add',validateFormAdd, addFormSubmitHandler);
+const popupAddMesto = new PopupWithForm('.popup-add', addFormSubmitHandler);
 popupAddMesto.setEventListeners();
 
-//запись в константу инстанса класса formValidate для формы Edit
-const  validateFormEdit = validatorList[document.querySelector('.popup-edit').querySelector('.form').name];
 //Создание инстанса для попапа формы Edit
-const popupEditProfile = new PopupWithForm('.popup-edit',validateFormEdit, editProfileSubmitHandler);
+const popupEditProfile = new PopupWithForm('.popup-edit', editProfileSubmitHandler);
 popupEditProfile.setEventListeners();
 
 const popupPreviewImage = new PopupWithImage('.popup-image');
@@ -61,7 +60,6 @@ const jobInput = formEdit.elements.edit_job;
 
 // Переменные для формы Add
 const buttonFormAddOpen = document.querySelector('.profile__button-add');
-// const formAdd = document.forms.form__add;
 
 // Обработка submit формы Edit
 function editProfileSubmitHandler(data) {
@@ -80,15 +78,17 @@ function addFormSubmitHandler(data) {
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
-   const objUserInfo = mestoUserInfo.getUserInfo();
+  const objUserInfo = mestoUserInfo.getUserInfo();
   nameInput.value = objUserInfo.name;
   jobInput.value = objUserInfo.info;
   popupEditProfile.open();
+  validateFormEdit.resetValidation();
 });
 
 // Слушатель клика на кнопке Add
 buttonFormAddOpen.addEventListener('click', () => {
   popupAddMesto.open();
+  validateFormAdd.resetValidation();
 });
 
 // Обработка клика на изображении в карточке
