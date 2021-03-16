@@ -5,6 +5,7 @@ import UserInfo from '../components/UserInfo.js';
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupConfirm from '../components/PopupConfirm.js';
 
 import './index.css'
 
@@ -36,6 +37,7 @@ formList.forEach((formElement) => {
 //запись в константы инстансов класса formValidate для форм
 const validateFormAdd = validatorList[document.querySelector('.popup-add').querySelector('.form').name];
 const validateFormEdit = validatorList[document.querySelector('.popup-edit').querySelector('.form').name];
+const validateFormAvatar = validatorList[document.querySelector('.popup-avatar').querySelector('.form').name];
 
 //Создание инстанса для попапа формы Add
 const popupAddMesto = new PopupWithForm('.popup-add', addFormSubmitHandler);
@@ -44,6 +46,14 @@ popupAddMesto.setEventListeners();
 //Создание инстанса для попапа формы Edit
 const popupEditProfile = new PopupWithForm('.popup-edit', editProfileSubmitHandler);
 popupEditProfile.setEventListeners();
+
+//Создание инстанса для попапа формы Avatar
+const popupAvatarMesto = new PopupWithForm('.popup-avatar', avatarFormSubmitHandler);
+popupAvatarMesto.setEventListeners();
+
+//Создание инстанса для попапа формы Delete
+const popupDeleteMesto = new PopupConfirm('.popup-delete', deleteFormSubmitHandler);
+popupDeleteMesto.setEventListeners();
 
 const popupPreviewImage = new PopupWithImage('.popup-image');
 popupPreviewImage.setEventListeners();
@@ -76,6 +86,16 @@ function addFormSubmitHandler(data) {
   popupAddMesto.close();
 }
 
+// Обработка submit формы Avatar
+function avatarFormSubmitHandler(data) {
+  popupAvatarMesto.close();
+}
+function deleteFormSubmitHandler(data) {
+  console.log(data)
+  data.remove()
+  popupDeleteMesto.close();
+}
+
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
   const objUserInfo = mestoUserInfo.getUserInfo();
@@ -96,15 +116,29 @@ function handleCardClick(name, link) {
   popupPreviewImage.open(name, link);
 }
 
+// Обработка клика на корзине в карточке
+function handleDeleteCard(data) {
+  popupDeleteMesto.open(data);
+}
+
 //-------------------------------------------------------------------------------
 // Добавление карточек в DOM
 //-------------------------------------------------------------------------------
 
 // Возвращает новую карточку
 function createCard(newMesto) {
-  const card = new Card(newMesto, '.element-mesto', handleCardClick);
+  const card = new Card(newMesto, '.element-mesto', handleCardClick, handleDeleteCard);
   return card.generateMesto();
 }
 
 //Добавление в DOM первоначального массива карточек
 addSection.addCardsToDom();
+
+
+const editAvatar = document.querySelector('.profile__avatar-cover');
+
+editAvatar.addEventListener('click', () => {
+  popupAvatarMesto.open();
+  validateFormAvatar.resetValidation();
+});
+
