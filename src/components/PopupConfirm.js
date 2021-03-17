@@ -5,11 +5,7 @@ export default class PopupConfirm extends Popup {
     super(popupSelector);
     this.submitHandler = submitHandler;
     this._formElement = this._popupElement.querySelector('.form');
-   }
-
-  setEventListeners() {
-    super.setEventListeners();
-    this._popupElement.addEventListener('submit', () => this.submitHandler(this.data));
+    this._inputList = Array.from(this._formElement.querySelectorAll('.form__input'));
   }
 
   open(data) {
@@ -20,6 +16,11 @@ export default class PopupConfirm extends Popup {
   close() {
     super.close();
     this._formElement.reset();
+  }
+
+  setEventListeners() {
+    super.setEventListeners();
+    this._popupElement.addEventListener('submit', () => this.submitHandler(this.data));
   }
 
 }

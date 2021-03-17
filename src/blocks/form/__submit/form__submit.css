@@ -24,6 +24,7 @@
   .form__submit {
     font-size: 14px;
     line-height: 17px;
-    padding: 14px 82px;
+    width: 238px;
+    height: 40px;
   }
 }

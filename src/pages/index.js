@@ -90,8 +90,8 @@ function addFormSubmitHandler(data) {
 function avatarFormSubmitHandler(data) {
   popupAvatarMesto.close();
 }
+
 function deleteFormSubmitHandler(data) {
-  console.log(data)
   data.remove()
   popupDeleteMesto.close();
 }

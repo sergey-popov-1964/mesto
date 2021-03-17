@@ -19,10 +19,6 @@ export default class Card {
     this._element.querySelector('.element__heart').classList.toggle('element__heart_like');
   };
 
-  // _handleDeleteCard() {
-  //   this._element.remove();
-  // };
-
   _setEventListeners() {
     this._element.querySelector('.element__heart').addEventListener('click', () => {
       this._handleLikeIcon();
