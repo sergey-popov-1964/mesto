@@ -2,6 +2,7 @@ export default class Card {
   constructor(data, cardSelector, handleCardClick, handleDeleteCard) {
     this._name = data.name;
     this._link = data.link;
+    this._ownerID = data.owner._id;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCard = handleDeleteCard;
@@ -24,20 +25,23 @@ export default class Card {
       this._handleLikeIcon();
     });
 
-    this._element.querySelector('.element__trash').addEventListener('click', () => {
-      this._handleDeleteCard(this._element);
-    });
-
+    if (this._element.querySelector('.element__trash')) {
+      this._element.querySelector('.element__trash').addEventListener('click', () => {
+        this._handleDeleteCard(this._element);
+      });
+    }
     this._element.querySelector('.element__img').addEventListener('click', (evt) => {
       if (evt.target === evt.currentTarget) {
         this._handleCardClick(this._name, this._link);
       }
     });
-
   }
 
-  generateMesto() {
+  generateMesto(userId) {
     this._element = this._getTemplate();
+    if (this._ownerID !== userId) {
+      this._element.querySelector('.element__trash').remove()
+    }
     this._setEventListeners();
     this._element.querySelector('.element__img').style.backgroundImage = "url(" + this._link + ")";
     this._element.querySelector('.element__text').textContent = this._name;
