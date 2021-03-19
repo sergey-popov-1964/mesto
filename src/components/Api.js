@@ -3,11 +3,11 @@ export default class Api {
     this._urlCards = baseUrl + '/cards';
     this._urlUserInfo = baseUrl + '/users/me';
     this._urlUserAvatar = baseUrl + '/users/me/avatar';
-    this.config = config;
+    this._config = config;
   }
 
   getInitialCards() {
-    return fetch(this._urlCards, this.config)
+    return fetch(this._urlCards, this._config)
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -17,7 +17,7 @@ export default class Api {
   }
 
   getInitialUserInfo() {
-    return fetch(this._urlUserInfo, this.config)
+    return fetch(this._urlUserInfo, this._config)
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -36,7 +36,6 @@ export default class Api {
       });
   }
 
-
   setUserAvatar(method, headers, body) {
     return fetch(this._urlUserAvatar, {method, headers, body})
       .then(res => {
@@ -47,4 +46,23 @@ export default class Api {
       });
   }
 
+  setCards(method, headers, body) {
+    return fetch(this._urlCards, {method, headers, body})
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
+
+  deleteCards(url, method, headers, body) {
+    return fetch(url, {method, headers, body})
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      });
+  }
 }
