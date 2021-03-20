@@ -1,4 +1,3 @@
-import initialCards from '../components/initial-сards.js';
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
@@ -49,13 +48,7 @@ const validateFormAvatar = validatorList[document.querySelector('.popup-avatar')
 const authorization = {authorization: 'be1a7eff-1608-42e4-ab79-a96e12a8c4b6', 'Content-Type': 'application/json'}
 const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-21'
 const user_ID = '3e2a74326fac3d4d7e8ff79b';
-const apiHeaders = {
-  headers: {
-    authorization: 'be1a7eff-1608-42e4-ab79-a96e12a8c4b6',
-    'Content-Type': 'application/json'
-  }
-}
-const api = new Api(baseUrl, apiHeaders);
+const api = new Api(baseUrl, authorization);
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -87,14 +80,9 @@ buttonFormAddOpen.addEventListener('click', () => {
 
 // Обработка submit формы Add
 function addFormSubmitHandler(data) {
-  const method = 'POST'
-  api.setCards(method, authorization, JSON.stringify({name: data.add_name_mesto, link: data.add_name_link}))
+  api.setCards({name: data.add_name_mesto, link: data.add_name_link})
     .then(card => {
-      const newMesto = {};
-      newMesto.name = card.name;
-      newMesto.link = card.link;
-      newMesto.owner = card.owner._id;
-      addSection.addItem(createCard(newMesto));
+      addSection.addItem(createCard({name: card.name, link: card.link, owner: card.owner._id}));
     })
   popupAddMesto.close();
 }
@@ -128,13 +116,10 @@ buttonFormEditOpen.addEventListener('click', () => {
 
 // Обработка submit формы Edit
 function editProfileSubmitHandler(data) {
-  const method = 'PATCH'
-  api.setUserInfo(method, authorization, JSON.stringify({name: data.edit_name_avatar, about: data.edit_job}))
+  api.setUserInfo({name: data.edit_name_avatar, about: data.edit_job})
     .then(user => mestoUserInfo.setUserInfo(user.name, user.about))
-  mestoUserInfo.setUserInfo(data.edit_name_avatar, data.edit_job);
   popupEditProfile.close();
 }
-
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -148,7 +133,6 @@ popupPreviewImage.setEventListeners();
 function handleCardClick(name, link) {
   popupPreviewImage.open(name, link);
 }
-
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -161,8 +145,7 @@ popupAvatarMesto.setEventListeners();
 
 // Обработка submit формы Avatar
 function avatarFormSubmitHandler(data) {
-  const method = 'PATCH'
-  api.setUserAvatar(method, authorization, JSON.stringify({avatar: data.avatar_mesto}))
+  api.setUserAvatar({avatar: data.avatar_mesto})
     .then(user => mestoUserInfo.setUserAvatar(user.avatar))
   popupAvatarMesto.close();
 }
@@ -189,15 +172,13 @@ function handleDeleteCard(element, id) {
 }
 
 function deleteFormSubmitHandler(element, id) {
-  const method = 'DELETE'
   const urlCardID = baseUrl + '/cards/' + id
-  api.deleteCards(urlCardID, method, authorization, JSON.stringify({_id: id}))
-    .then(card => {
+  api.deleteCards(urlCardID, {_id: id})
+    .then(() => {
       element.remove()
     })
   popupDeleteMesto.close();
 }
-
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 

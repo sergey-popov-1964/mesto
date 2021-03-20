@@ -7,62 +7,90 @@ export default class Api {
   }
 
   getInitialCards() {
-    return fetch(this._urlCards, this._config)
+    return fetch(this._urlCards, {
+      method: 'GET',
+      headers: this._config,
+    })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при получении карточек`));
   }
 
   getInitialUserInfo() {
-    return fetch(this._urlUserInfo, this._config)
+    return fetch(this._urlUserInfo, {
+      method: 'GET',
+      headers: this._config,
+      })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при получении профиля`));
   }
 
-  setUserInfo(method, headers, body) {
-    return fetch(this._urlUserInfo, {method, headers, body})
+  setUserInfo(data) {
+    return fetch(this._urlUserInfo, {
+      method: 'PATCH',
+      headers: this._config,
+      body: JSON.stringify(data)
+    })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при изменении профиля`));
   }
 
-  setUserAvatar(method, headers, body) {
-    return fetch(this._urlUserAvatar, {method, headers, body})
+  setUserAvatar(data) {
+    return fetch(this._urlUserAvatar, {
+      method: 'PATCH',
+      headers: this._config,
+      body: JSON.stringify(data)
+    })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при изменении аватара`));
   }
 
-  setCards(method, headers, body) {
-    return fetch(this._urlCards, {method, headers, body})
+  setCards(data) {
+    return fetch(this._urlCards, {
+      method: 'POST',
+      headers: this._config,
+      body: JSON.stringify(data)
+    })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при создании карточки`));
   }
 
-  deleteCards(url, method, headers, body) {
-    return fetch(url, {method, headers, body})
+  deleteCards(url, data) {
+    return fetch(url, {
+      method: 'DELETE',
+      headers: this._config,
+      body: JSON.stringify(data)
+  })
       .then(res => {
         if (res.ok) {
           return res.json();
         }
         return Promise.reject(`Ошибка: ${res.status}`);
-      });
+      })
+      .catch(() => console.log(`Ошибка при удалении карточки`));
   }
 }
