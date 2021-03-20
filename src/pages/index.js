@@ -6,7 +6,6 @@ import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from '../components/PopupWithForm.js';
 import PopupConfirm from '../components/PopupConfirm.js';
 import Api from '../components/Api.js';
-
 import './index.css'
 
 
@@ -82,7 +81,7 @@ buttonFormAddOpen.addEventListener('click', () => {
 function addFormSubmitHandler(data) {
   api.setCards({name: data.add_name_mesto, link: data.add_name_link})
     .then(card => {
-      addSection.addItem(createCard({name: card.name, link: card.link, owner: card.owner._id}));
+      addSection.addItem(createCard(card));
     })
   popupAddMesto.close();
 }
@@ -120,6 +119,7 @@ function editProfileSubmitHandler(data) {
     .then(user => mestoUserInfo.setUserInfo(user.name, user.about))
   popupEditProfile.close();
 }
+
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -133,6 +133,7 @@ popupPreviewImage.setEventListeners();
 function handleCardClick(name, link) {
   popupPreviewImage.open(name, link);
 }
+
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 
@@ -172,13 +173,13 @@ function handleDeleteCard(element, id) {
 }
 
 function deleteFormSubmitHandler(element, id) {
-  const urlCardID = baseUrl + '/cards/' + id
-  api.deleteCards(urlCardID, {_id: id})
+  api.deleteCards({_id: id})
     .then(() => {
       element.remove()
     })
   popupDeleteMesto.close();
 }
+
 //-----------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------
 

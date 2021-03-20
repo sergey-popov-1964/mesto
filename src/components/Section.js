@@ -6,6 +6,7 @@ export default class Section {
 
   // Добавление новой карточки в DOM
   addItem(card) {
+    // console.log(card)
     this._itemSelector.prepend(card);
 
   }

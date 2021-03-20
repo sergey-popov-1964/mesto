@@ -46,12 +46,14 @@
   <form action="#" class="form popup__form" name="form__edit" novalidate>
     <h2 class="form__title">Редактировать профиль</h2>
     <label class="form__label">
-      <input type="text" id="input-name" class="form__input form__input_type_first form__input_edit_name" name="edit_name_avatar"
+      <input type="text" id="input-name" class="form__input form__input_type_first form__input_edit_name"
+             name="edit_name_avatar"
              minlength="2" maxlength="40" required>
       <span class="form__error input-name-error"></span>
     </label>
     <label class="form__label">
-      <input type="text" id="input-job" class="form__input form__input_type_last form__input_edit_job" name="edit_job" minlength="2"
+      <input type="text" id="input-job" class="form__input form__input_type_last form__input_edit_job" name="edit_job"
+             minlength="2"
              maxlength="200" required>
       <span class="form__error input-job-error"></span>
     </label>
@@ -66,12 +68,14 @@
   <form action="#" class="form popup__form" name="form__add" novalidate>
     <h2 class="form__title">Новое место</h2>
     <label class="form__label">
-      <input type="text" id="input-mesto" class="form__input form__input_type_first form__input_add_name" name="add_name_mesto"
+      <input type="text" id="input-mesto" class="form__input form__input_type_first form__input_add_name"
+             name="add_name_mesto"
              placeholder="Название" minlength="2" maxlength="30" required>
       <span class="form__error input-mesto-error"></span>
     </label>
     <label class="form__label">
-      <input type="url" id="input-link" class="form__input form__input_type_last form__input_add_link" name="add_name_link"
+      <input type="url" id="input-link" class="form__input form__input_type_last form__input_add_link"
+             name="add_name_link"
              placeholder="Ссылка на картинку" required>
       <span class="form__error input-link-error"></span>
     </label>
@@ -86,11 +90,13 @@
   <form action="#" class="form popup__form" name="form__avatar" novalidate>
     <h2 class="form__title">Обновить аватар</h2>
     <label class="form__label">
-      <input type="url" id="input-avatar" class="form__input form__input_type_last form__input_type_first form__input_avatar_link" name="avatar_mesto"
+      <input type="url" id="input-avatar"
+             class="form__input form__input_type_last form__input_type_first form__input_avatar_link"
+             name="avatar_mesto"
              placeholder="Название" minlength="2" maxlength="300" required>
       <span class="form__error input-avatar-error"></span>
     </label>
-     <button type="submit" aria-label="submit" class="form__submit" name="form_submit">
+    <button type="submit" aria-label="submit" class="form__submit" name="form_submit">
       Сохранить
     </button>
     <button type="button" aria-label="close" class="form__close popup__close" name="form_close"></button>
@@ -122,7 +128,10 @@
     </div>
     <div class="element__info">
       <p class="element__text"></p>
-      <button type="button" class="element__heart"></button>
+      <div class="element__likes">
+        <button type="button" class="element__heart"></button>
+        <span class="element__counter-like"></span>
+      </div>
     </div>
   </li>
 </template>

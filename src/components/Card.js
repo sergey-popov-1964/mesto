@@ -7,6 +7,11 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCard = handleDeleteCard;
+
+    this._likes = Array.from(data.likes).map(function (item) {
+      return item._id;
+    });
+    console.log(this._likes)
   }
 
   _getTemplate() {
@@ -46,6 +51,9 @@ export default class Card {
     this._setEventListeners();
     this._element.querySelector('.element__img').style.backgroundImage = "url(" + this._link + ")";
     this._element.querySelector('.element__text').textContent = this._name;
+    if (this._likes.length > 0) {
+      this._element.querySelector('.element__counter-like').textContent =this._likes.length.toString();
+    }
     return this._element;
   }
 }
