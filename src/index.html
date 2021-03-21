@@ -11,18 +11,20 @@
 <div class="page">
   <header class="header page__header">
     <a href="#" target="_self" class="header__logo">
-      <img src="<%=require('./images/mesto_logo.svg')%>" alt="Логотип" class="header__img">
+      <img src="./images/mesto_logo.svg" alt="Логотип" class="header__img">
     </a>
   </header>
 
   <main class="content">
 
     <section class="profile">
-      <img src="<%=require('./images/mesto_custo.png')%>" alt="картинка - аватар пользователя" class="profile__avatar">
+      <div class="profile__avatar-cover">
+        <img src="#" alt="картинка - аватар пользователя" class="profile__avatar">
+      </div>
       <div class="profile__info">
-        <h1 class="profile__name">Жак-Ив Кусто</h1>
+        <h1 class="profile__name"></h1>
         <button type="button" aria-label="add" class="profile__button-edit"></button>
-        <p class="profile__job">Исследователь океана</p>
+        <p class="profile__job"></p>
       </div>
       <button type="button" aria-label="edit" class="profile__button-add"></button>
     </section>
@@ -44,12 +46,14 @@
   <form action="#" class="form popup__form" name="form__edit" novalidate>
     <h2 class="form__title">Редактировать профиль</h2>
     <label class="form__label">
-      <input type="text" id="input-name" class="form__input form__input_edit_name" name="edit_name_avatar"
+      <input type="text" id="input-name" class="form__input form__input_type_first form__input_edit_name"
+             name="edit_name_avatar"
              minlength="2" maxlength="40" required>
       <span class="form__error input-name-error"></span>
     </label>
     <label class="form__label">
-      <input type="text" id="input-job" class="form__input form__input_edit_job" name="edit_job" minlength="2"
+      <input type="text" id="input-job" class="form__input form__input_type_last form__input_edit_job" name="edit_job"
+             minlength="2"
              maxlength="200" required>
       <span class="form__error input-job-error"></span>
     </label>
@@ -64,17 +68,46 @@
   <form action="#" class="form popup__form" name="form__add" novalidate>
     <h2 class="form__title">Новое место</h2>
     <label class="form__label">
-      <input type="text" id="input-mesto" class="form__input form__input_add_name" name="add_name_mesto"
+      <input type="text" id="input-mesto" class="form__input form__input_type_first form__input_add_name"
+             name="add_name_mesto"
              placeholder="Название" minlength="2" maxlength="30" required>
       <span class="form__error input-mesto-error"></span>
     </label>
     <label class="form__label">
-      <input type="url" id="input-link" class="form__input form__input_add_link" name="add_name_link"
+      <input type="url" id="input-link" class="form__input form__input_type_last form__input_add_link"
+             name="add_name_link"
              placeholder="Ссылка на картинку" required>
       <span class="form__error input-link-error"></span>
     </label>
     <button type="submit" aria-label="submit" class="form__submit" name="form_submit">
       Создать
+    </button>
+    <button type="button" aria-label="close" class="form__close popup__close" name="form_close"></button>
+  </form>
+</div>
+
+<div class="popup-avatar popup">
+  <form action="#" class="form popup__form" name="form__avatar" novalidate>
+    <h2 class="form__title">Обновить аватар</h2>
+    <label class="form__label">
+      <input type="url" id="input-avatar"
+             class="form__input form__input_type_last form__input_type_first form__input_avatar_link"
+             name="avatar_mesto"
+             placeholder="Введите адрес" minlength="2" maxlength="300" required>
+      <span class="form__error input-avatar-error"></span>
+    </label>
+    <button type="submit" aria-label="submit" class="form__submit" name="form_submit">
+      Сохранить
+    </button>
+    <button type="button" aria-label="close" class="form__close popup__close" name="form_close"></button>
+  </form>
+</div>
+
+<div class="popup-delete popup">
+  <form action="#" class="form popup__form" name="form__delete" novalidate>
+    <h2 class="form__title">Вы уверены?</h2>
+    <button type="submit" aria-label="submit" class="form__submit" name="form_submit">
+      Да
     </button>
     <button type="button" aria-label="close" class="form__close popup__close" name="form_close"></button>
   </form>
@@ -95,11 +128,13 @@
     </div>
     <div class="element__info">
       <p class="element__text"></p>
-      <button type="button" class="element__heart"></button>
+      <div class="element__likes">
+        <button type="button" class="element__heart"></button>
+        <span class="element__counter-like"></span>
+      </div>
     </div>
   </li>
 </template>
-
 
 </body>
 

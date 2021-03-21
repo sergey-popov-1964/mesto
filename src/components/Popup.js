@@ -13,7 +13,7 @@ export default class Popup {
 
   // Функция открытия попапа с формой
   open() {
-    this._popupElement.classList.add('popup_active');
+     this._popupElement.classList.add('popup_active');
     document.addEventListener('keydown', this._handleEscClose);
   };
 

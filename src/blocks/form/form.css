@@ -1,7 +1,7 @@
 .form {
   max-width: 430px;
   margin: 0;
-  padding: 36px;
+  padding: 34px 36px 36px 36px;
   position: relative;
   z-index: 100;
   background: #FFFFFF;
