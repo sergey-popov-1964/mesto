@@ -9,16 +9,24 @@ export default class UserInfo {
     return {
       name: this._userNameSelector.textContent,
       info: this._userInfoSelector.textContent,
+      avatar: this._userAvatarSelector.src,
+
     }
   }
 
   setUserInfo(userName, userInfo) {
-    this._userNameSelector.textContent = userName;
-    this._userInfoSelector.textContent = userInfo;
+    if (userName) {
+      this._userNameSelector.textContent = userName;
+    }
+    if (userInfo) {
+      this._userInfoSelector.textContent = userInfo;
+    }
   }
 
   setUserAvatar(userAvatar) {
-    this._userAvatarSelector.src = userAvatar;
+    if (userAvatar) {
+      this._userAvatarSelector.src = userAvatar;
+    }
   }
 
 }
