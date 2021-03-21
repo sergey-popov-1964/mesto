@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, cardSelector, handleCardClick, handleDeleteCard) {
+  constructor(data, cardSelector, handleCardClick, handleDeleteCard, handleLikeClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardID = data._id;
@@ -7,11 +7,10 @@ export default class Card {
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
     this._handleDeleteCard = handleDeleteCard;
-
+    this._handleLikeClick = handleLikeClick;
     this._likes = Array.from(data.likes).map(function (item) {
       return item._id;
     });
-    console.log(this._likes)
   }
 
   _getTemplate() {
@@ -28,7 +27,8 @@ export default class Card {
 
   _setEventListeners() {
     this._element.querySelector('.element__heart').addEventListener('click', () => {
-      this._handleLikeIcon();
+      // this._handleLikeIcon();
+      this._handleLikeClick(this._element, this._cardID);
     });
 
     if (this._element.querySelector('.element__trash')) {
@@ -52,7 +52,10 @@ export default class Card {
     this._element.querySelector('.element__img').style.backgroundImage = "url(" + this._link + ")";
     this._element.querySelector('.element__text').textContent = this._name;
     if (this._likes.length > 0) {
-      this._element.querySelector('.element__counter-like').textContent =this._likes.length.toString();
+      this._element.querySelector('.element__counter-like').textContent = this._likes.length.toString();
+      if (this._likes.includes(userId)) {
+        this._element.querySelector('.element__heart').classList.add('element__heart_like');
+      }
     }
     return this._element;
   }

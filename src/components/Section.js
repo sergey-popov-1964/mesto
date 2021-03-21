@@ -8,7 +8,6 @@ export default class Section {
   addItem(card) {
     // console.log(card)
     this._itemSelector.prepend(card);
-
   }
 
 //Добавление в DOM первоначального массива карточек

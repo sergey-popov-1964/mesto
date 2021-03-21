@@ -91,7 +91,7 @@ export default class Api {
       .catch(() => console.log(`Ошибка при удалении карточки`));
   }
 
-  likeCards(data) {
+  setCardLike(data) {
     return fetch(`${this._baseUrl}/cards/likes/${data._id}`, {
       method: 'PUT',
       headers: this._config,
@@ -102,8 +102,20 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при удалении карточки`));
+      .catch(() => console.log(`Ошибка при установке лайка`));
   }
 
-
+  deleteCardLike(data) {
+    return fetch(`${this._baseUrl}/cards/likes/${data._id}`, {
+      method: 'DELETE',
+      headers: this._config,
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      })
+      .catch(() => console.log(`Ошибка при удалении лайка`));
+  }
 }
