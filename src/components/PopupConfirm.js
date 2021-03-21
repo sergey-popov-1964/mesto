@@ -5,7 +5,6 @@ export default class PopupConfirm extends Popup {
     super(popupSelector);
     this.submitHandler = submitHandler;
     this._formElement = this._popupElement.querySelector('.form');
-    this._inputList = Array.from(this._formElement.querySelectorAll('.form__input'));
   }
 
   open(cardElement, cardID) {
