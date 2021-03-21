@@ -15,7 +15,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при получении карточек`));
   }
 
   getInitialUserInfo() {
@@ -29,7 +28,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при получении профиля`));
   }
 
   setUserInfo(data) {
@@ -44,7 +42,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при изменении профиля`));
   }
 
   setUserAvatar(data) {
@@ -59,10 +56,9 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при изменении аватара`));
   }
 
-  setCards(data) {
+  addCard(data) {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._config,
@@ -74,7 +70,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при создании карточки`));
   }
 
   deleteCards(data) {
@@ -88,7 +83,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при удалении карточки`));
   }
 
   setCardLike(data) {
@@ -102,7 +96,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при установке лайка`));
   }
 
   deleteCardLike(data) {
@@ -116,6 +109,6 @@ export default class Api {
         }
         return Promise.reject(`Ошибка: ${res.status}`);
       })
-      .catch(() => console.log(`Ошибка при удалении лайка`));
+
   }
 }

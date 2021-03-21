@@ -1,3 +1,5 @@
+import {renderLoading} from '../components/util.js';
+
 import Card from '../components/Card.js';
 import FormValidator from '../components/FormValidator.js';
 import UserInfo from '../components/UserInfo.js';
@@ -10,7 +12,6 @@ import './index.css'
 
 
 // Валидация
-//-----------------------------------------------------------------------------------------------------------------------------------
 const validatorList = {}; // объявление объекта для инстансов классов валидации
 
 // Объект с настройками для FormValidator
@@ -23,6 +24,10 @@ const configValidation = {
   errorClass: 'form__error_active'
 };
 
+const FormAdd = document.querySelector('.popup-add').querySelector('.form');
+const FormEdit = document.querySelector('.popup-edit').querySelector('.form');
+const FormAvatar = document.querySelector('.popup-avatar').querySelector('.form');
+
 // Для каждой проверяемой формы создается экземпляр класса FormValidator
 const formList = Array.from(document.querySelectorAll(configValidation.formSelector));
 formList.forEach((formElement) => {
@@ -34,41 +39,32 @@ formList.forEach((formElement) => {
   validatorList[formElement.name] = formValidate //добавление инстанса в объект
 });
 //запись в константы инстансов класса formValidate для форм
-const validateFormAdd = validatorList[document.querySelector('.popup-add').querySelector('.form').name];
-const validateFormEdit = validatorList[document.querySelector('.popup-edit').querySelector('.form').name];
-const validateFormAvatar = validatorList[document.querySelector('.popup-avatar').querySelector('.form').name];
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
+const validateFormAdd = validatorList[FormAdd.name];
+const validateFormEdit = validatorList[FormEdit.name];
+const validateFormAvatar = validatorList[FormAvatar.name];
 
-
-// API
-//-----------------------------------------------------------------------------------------------------------------------------------
 // Константы для API
-const authorization = {authorization: 'be1a7eff-1608-42e4-ab79-a96e12a8c4b6', 'Content-Type': 'application/json'}
-const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-21'
+const authorization = {authorization: 'be1a7eff-1608-42e4-ab79-a96e12a8c4b6', 'Content-Type': 'application/json'};
+const baseUrl = 'https://mesto.nomoreparties.co/v1/cohort-21';
 const user_ID = '3e2a74326fac3d4d7e8ff79b';
 const api = new Api(baseUrl, authorization);
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
 
-
-// Работа с карточками
-//-----------------------------------------------------------------------------------------------------------------------------------
 // Возвращает новую карточку
+const elementMestoSelector = '.element-mesto';
+
 function createCard(newMesto) {
-  const card = new Card(newMesto, '.element-mesto', handleCardClick, handleDeleteCard, handleLikeClick);
-  return card.generateMesto(user_ID);
+  const card = new Card(newMesto, elementMestoSelector, handleCardClick, handleDeleteCard, handleLikeClick, user_ID);
+  return card.generateMesto();
 }
 
-const addSection = new Section({renderer: createCard}, '.elements__list');
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
+const elementListSelector = '.elements__list';
+const cardsSection = new Section({renderer: createCard}, elementListSelector);
 
 // форма Add
-//-----------------------------------------------------------------------------------------------------------------------------------
 //Создание инстанса для попапа формы Add
-const popupAddMesto = new PopupWithForm('.popup-add', addFormSubmitHandler);
+
+const elementPopupAddSelector = '.popup-add';
+const popupAddMesto = new PopupWithForm(elementPopupAddSelector, addFormSubmitHandler);
 popupAddMesto.setEventListeners();
 
 const buttonFormAddOpen = document.querySelector('.profile__button-add');
@@ -80,23 +76,17 @@ buttonFormAddOpen.addEventListener('click', () => {
 
 // Обработка submit формы Add
 function addFormSubmitHandler(data) {
-  buttonFormAddSubmit.innerText = 'Создание...'
-  buttonFormAddSubmit.setAttribute("disabled", "disabled");
-  api.setCards({name: data.add_name_mesto, link: data.add_name_link})
+  renderLoading(buttonFormAddSubmit, 'Создание...', 'disabled');
+  api.addCard({name: data.add_name_mesto, link: data.add_name_link})
     .then(card => {
-      addSection.addItem(createCard(card));
-      buttonFormAddSubmit.innerText = 'Создать';
-      buttonFormAddSubmit.removeAttribute("disabled");
+      cardsSection.addItem(createCard(card));
+      renderLoading(buttonFormAddSubmit, 'Создать', 'enabled');
+      popupAddMesto.close();
     })
-  popupAddMesto.close();
+    .catch(() => console.log(`Ошибка при создании карточки`));
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
-
 // форма Edit. Инфо профиля
-//-----------------------------------------------------------------------------------------------------------------------------------
 // Переменные для формы Edit
 const buttonFormEditOpen = document.querySelector('.profile__button-edit');
 const formEdit = document.forms.form__edit;
@@ -105,10 +95,14 @@ const jobInput = formEdit.elements.edit_job;
 const buttonSubmit = formEdit.elements.form_submit;
 
 //Создание инстанса для попапа формы Edit
-const popupEditProfile = new PopupWithForm('.popup-edit', editProfileSubmitHandler);
+const elementPopupEditSelector = '.popup-edit';
+const popupEditProfile = new PopupWithForm(elementPopupEditSelector, editProfileSubmitHandler);
 popupEditProfile.setEventListeners();
 
-const mestoUserInfo = new UserInfo('.profile__name', '.profile__job', '.profile__avatar');
+const elementProfileNameSelector = '.profile__name';
+const elementProfileJobSelector = '.profile__job';
+const elementProfileAvatarSelector = '.profile__avatar';
+const mestoUserInfo = new UserInfo(elementProfileNameSelector, elementProfileJobSelector, elementProfileAvatarSelector);
 
 // Слушатель клика на кнопке Edit
 buttonFormEditOpen.addEventListener('click', () => {
@@ -121,24 +115,19 @@ buttonFormEditOpen.addEventListener('click', () => {
 
 // Обработка submit формы Edit
 function editProfileSubmitHandler(data) {
-  buttonSubmit.innerText = 'Сохранение...'
-  buttonSubmit.setAttribute("disabled", "disabled");
+  renderLoading(buttonSubmit, 'Сохранение...', 'disabled');
   api.setUserInfo({name: data.edit_name_avatar, about: data.edit_job})
     .then(user => {
       mestoUserInfo.setUserInfo(user.name, user.about);
-      buttonSubmit.innerText = 'Сохранить';
-      buttonSubmit.removeAttribute("disabled");
+      renderLoading(buttonSubmit, 'Сохранить.', 'enabled');
+      popupEditProfile.close();
     })
-  popupEditProfile.close();
+    .catch(() => console.log(`Ошибка при сохранении профиля пользователя`));
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
-
 // Превью изображения в карточке
-//-----------------------------------------------------------------------------------------------------------------------------------
-const popupPreviewImage = new PopupWithImage('.popup-image');
+const elementPopupImageSelector = '.popup-image';
+const popupPreviewImage = new PopupWithImage(elementPopupImageSelector);
 popupPreviewImage.setEventListeners();
 
 // Обработка клика на изображении в карточке
@@ -146,12 +135,7 @@ function handleCardClick(name, link) {
   popupPreviewImage.open(name, link);
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
-
 // Клик на лайк
-//-----------------------------------------------------------------------------------------------------------------------------------
 function countLikes(card, elementCountLike) {
   const likes = Array.from(card.likes);
   if (likes.length === 0) {
@@ -170,37 +154,35 @@ function handleLikeClick(cardElement, cardId) {
         elementHeart.classList.add('element__heart_like');
         countLikes(card, elementCountLike);
       })
+      .catch(() => console.log(`Ошибка при удалении лайка`));
   } else {
     api.deleteCardLike({_id: cardId})
       .then(card => {
         elementHeart.classList.remove('element__heart_like');
         countLikes(card, elementCountLike);
       })
+      .catch(() => console.log(`Ошибка при установке лайка`));
   }
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
-
 // Avatar
-//-----------------------------------------------------------------------------------------------------------------------------------
 //Создание инстанса для попапа формы Avatar
 const buttonFormAvatarSubmit = document.querySelector('.popup-avatar').querySelector('.form__submit');
-const popupAvatarMesto = new PopupWithForm('.popup-avatar', avatarFormSubmitHandler);
+const elementPopupAvatarSelector = '.popup-avatar';
+const popupAvatarMesto = new PopupWithForm(elementPopupAvatarSelector, avatarFormSubmitHandler);
 popupAvatarMesto.setEventListeners();
 
 // Обработка submit формы Avatar
 function avatarFormSubmitHandler(data) {
-  buttonFormAvatarSubmit.innerText = 'Сохранение...'
-  buttonFormAvatarSubmit.setAttribute("disabled", "disabled");
+  renderLoading(buttonFormAvatarSubmit, 'Сохранение...', 'disabled');
   api.setUserAvatar({avatar: data.avatar_mesto})
     .then(user => {
       mestoUserInfo.setUserAvatar(user.avatar);
-      buttonFormAvatarSubmit.innerText = 'Сохранить';
-      buttonFormAvatarSubmit.removeAttribute("disabled");
+      renderLoading(buttonFormAvatarSubmit, 'Сохранить', 'enabled');
+      popupAvatarMesto.close();
     })
-  popupAvatarMesto.close();
+    .catch(() => console.log(`Ошибка при сохранении аватара`));
+
 }
 
 // Обработка клика на аватаре
@@ -209,14 +191,12 @@ editAvatar.addEventListener('click', () => {
   popupAvatarMesto.open();
   validateFormAvatar.resetValidation();
 });
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
 
 //  Удаление карточки
-//-----------------------------------------------------------------------------------------------------------------------------------
 //Создание инстанса для попапа формы Delete
-const popupDeleteMesto = new PopupConfirm('.popup-delete', deleteFormSubmitHandler);
+const buttonFormDeleteSubmit = document.querySelector('.popup-delete').querySelector('.form__submit');
+const elementPopupDeleteSelector = '.popup-delete';
+const popupDeleteMesto = new PopupConfirm(elementPopupDeleteSelector, deleteFormSubmitHandler);
 popupDeleteMesto.setEventListeners();
 
 // Обработка клика на корзине в карточке
@@ -225,36 +205,25 @@ function handleDeleteCard(element, id) {
 }
 
 function deleteFormSubmitHandler(element, id) {
+  renderLoading(buttonFormDeleteSubmit, 'Удаление...', 'disabled');
   api.deleteCards({_id: id})
     .then(() => {
-      element.remove()
+      element.remove();
+      renderLoading(buttonFormDeleteSubmit, 'Да', 'enabled');
+      popupDeleteMesto.close();
     })
-  popupDeleteMesto.close();
+    .catch(() => console.log(`Ошибка при удалении карточки`));
 }
 
-//-----------------------------------------------------------------------------------------------------------------------------------
-//-----------------------------------------------------------------------------------------------------------------------------------
-
-
 // Начальная загрузка данных с сервера
-//-----------------------------------------------------------------------------------------------------------------------------------
-// Инфо пользователя
-//-----------------------------
-api.getInitialUserInfo().then(user => {
-  mestoUserInfo.setUserInfo(user.name, user.about);
-  mestoUserInfo.setUserAvatar(user.avatar);
-})
-// Карточки
-//-----------------------------
-api.getInitialCards().then(cards => {
-  addSection.addCardsToDom(cards);
-})
-
-
-
-
-
-
+Promise.all([api.getInitialUserInfo(), api.getInitialCards()])
+  .then(data => {
+    mestoUserInfo.setUserInfo(data[0].name, data[0].about);
+    mestoUserInfo.setUserAvatar(data[0].avatar);
+    const reversCard = data[1].reverse();
+    cardsSection.addCardsToDom(reversCard);
+  })
+  .catch(() => console.log(`Ошибка загрузки данных с сервера`));
 
 
 
