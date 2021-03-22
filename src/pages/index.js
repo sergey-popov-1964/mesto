@@ -83,7 +83,11 @@ function addFormSubmitHandler(data) {
       renderLoading(buttonFormAddSubmit, 'Создать', 'enabled');
       popupAddMesto.close();
     })
-    .catch(() => console.log(`Ошибка при создании карточки`));
+    .catch(() => console.log(`Ошибка при создании карточки`))
+    .finally(() => {
+      renderLoading(buttonFormAddSubmit, 'Создать', 'enabled');
+      popupAddMesto.close();
+    });
 }
 
 // форма Edit. Инфо профиля
@@ -119,10 +123,12 @@ function editProfileSubmitHandler(data) {
   api.setUserInfo({name: data.edit_name_avatar, about: data.edit_job})
     .then(user => {
       mestoUserInfo.setUserInfo(user.name, user.about);
+    })
+    .catch(() => console.log(`Ошибка при сохранении профиля пользователя`))
+    .finally(() => {
       renderLoading(buttonSubmit, 'Сохранить.', 'enabled');
       popupEditProfile.close();
-    })
-    .catch(() => console.log(`Ошибка при сохранении профиля пользователя`));
+    });
 }
 
 // Превью изображения в карточке
@@ -178,11 +184,12 @@ function avatarFormSubmitHandler(data) {
   api.setUserAvatar({avatar: data.avatar_mesto})
     .then(user => {
       mestoUserInfo.setUserAvatar(user.avatar);
+    })
+    .catch(() => console.log(`Ошибка при сохранении аватара`))
+    .finally(() => {
       renderLoading(buttonFormAvatarSubmit, 'Сохранить', 'enabled');
       popupAvatarMesto.close();
-    })
-    .catch(() => console.log(`Ошибка при сохранении аватара`));
-
+    });
 }
 
 // Обработка клика на аватаре
@@ -209,10 +216,12 @@ function deleteFormSubmitHandler(element, id) {
   api.deleteCards({_id: id})
     .then(() => {
       element.remove();
+    })
+    .catch(() => console.log(`Ошибка при удалении карточки`))
+    .finally(() => {
       renderLoading(buttonFormDeleteSubmit, 'Да', 'enabled');
       popupDeleteMesto.close();
-    })
-    .catch(() => console.log(`Ошибка при удалении карточки`));
+    });
 }
 
 // Начальная загрузка данных с сервера
