@@ -42,7 +42,7 @@ export default class Card {
 
   }
 
-  generateMesto(userId) {
+  generateMesto() {
     this._element = this._getTemplate();
     this._elementTrash = this._element.querySelector('.element__trash')
     this._elementImage = this._element.querySelector('.element__img');

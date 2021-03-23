@@ -80,8 +80,6 @@ function addFormSubmitHandler(data) {
   api.addCard({name: data.add_name_mesto, link: data.add_name_link})
     .then(card => {
       cardsSection.addItem(createCard(card));
-      renderLoading(buttonFormAddSubmit, 'Создать', 'enabled');
-      popupAddMesto.close();
     })
     .catch(() => console.log(`Ошибка при создании карточки`))
     .finally(() => {
